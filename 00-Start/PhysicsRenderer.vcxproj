@@ -67,7 +67,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{B021DB63-A042-4F79-91E1-EFEB9D3401A2}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>GamePhysicsWeekend</RootNamespace>
+    <RootNamespace>Physics</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
