@@ -114,7 +114,7 @@ void Application::InitializeGLFW() {
 
 	glfwWindowHint( GLFW_CLIENT_API, GLFW_NO_API );
 
-	glfwWindow = glfwCreateWindow( WINDOW_WIDTH, WINDOW_HEIGHT, "GamePhysicsWeekend", nullptr, nullptr );
+	glfwWindow = glfwCreateWindow( WINDOW_WIDTH, WINDOW_HEIGHT, "Physics", nullptr, nullptr );
 
 	glfwSetWindowUserPointer( glfwWindow, this );
 	glfwSetWindowSizeCallback( glfwWindow, Application::OnWindowResized );
@@ -187,7 +187,7 @@ bool Application::InitializeVulkan() {
 		printf( "ERROR: Failed to create device\n" );
 		assert( 0 );
 		return false;
-	}	
+	}
 
 	//
 	//	Create SwapChain
@@ -211,7 +211,7 @@ bool Application::InitializeVulkan() {
 		assert( 0 );
 		return false;
 	}
-	
+
 	//
 	//	Uniform Buffer
 	//
@@ -389,7 +389,7 @@ void Application::MouseMoved( float x, float y ) {
 		m_cameraPositionTheta = 3.0f;
 	}
 }
- 
+
 /*
 ====================================================
 Application::OnMouseWheelScrolled

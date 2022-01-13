@@ -45,7 +45,7 @@ bool PhysicalDeviceProperties::AcquireProperties( VkPhysicalDevice device, VkSur
 	m_vkPhysicalDevice = device;
 
 	vkGetPhysicalDeviceProperties( m_vkPhysicalDevice, &m_vkDeviceProperties );
-	vkGetPhysicalDeviceMemoryProperties( m_vkPhysicalDevice, &m_vkMemoryProperties );		
+	vkGetPhysicalDeviceMemoryProperties( m_vkPhysicalDevice, &m_vkMemoryProperties );
 	vkGetPhysicalDeviceFeatures( m_vkPhysicalDevice, &m_vkFeatures );
 
 	// VkSurfaceCapabilitiesKHR
@@ -227,7 +227,7 @@ bool DeviceContext::CreateInstance( bool enableLayers, const std::vector< const 
 	//
 	VkApplicationInfo appInfo = {};
 	appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
-	appInfo.pApplicationName = "GamePhysicsWeekend";
+	appInfo.pApplicationName = "Physics";
 	appInfo.applicationVersion = VK_MAKE_VERSION( 1, 0, 0 );
 	appInfo.apiVersion = VK_MAKE_VERSION( 1, 0, 0 );
 
@@ -276,7 +276,7 @@ void DeviceContext::Cleanup() {
 	vkFreeCommandBuffers( m_vkDevice, m_vkCommandPool, (uint32_t)m_vkCommandBuffers.size(), m_vkCommandBuffers.data() );
 	vkDestroyCommandPool( m_vkDevice, m_vkCommandPool, nullptr );
 
-	vkDestroyDevice( m_vkDevice, nullptr );	
+	vkDestroyDevice( m_vkDevice, nullptr );
 
 	if ( m_enableLayers ) {
 		vfs::vkDestroyDebugReportCallbackEXT( m_vkInstance, m_vkDebugCallback, nullptr );
@@ -363,7 +363,7 @@ bool DeviceContext::CreatePhysicalDevice() {
 		for ( uint32_t i = 0; i < physicalDevices.size(); i++ ) {
 			m_physicalDevices[ i ].AcquireProperties( physicalDevices[ i ], m_vkSurface );
 		}
-	}	
+	}
 
 	//
 	//	Select a physical device
