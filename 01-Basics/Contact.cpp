@@ -12,14 +12,30 @@ void Contact::ResolveContact(Contact& contact)
 	const float elasticityB = b->elasticity;
 	const float elasticity = elasticityA * elasticityB;
 
+	const Vec3 ptOnA = contact.ptOnAWorldSpace;
+	const Vec3 ptOnB = contact.ptOnBWorldSpace;
+
+	const Mat3 inverseWorldInertiaA = a->GetInverseInertiaTensorWorldSpace();
+	const Mat3 inverseWorldInertiaB = b->GetInverseInertiaTensorWorldSpace();
+	const Vec3 n = contact.normal;
+	const Vec3 tauA = ptOnA - a->GetCenterOfMassWorldSpace();
+	const Vec3 tauB = ptOnB - b->GetCenterOfMassWorldSpace();
+
+	const Vec3 angularJA = (inverseWorldInertiaA * tauA.Cross(n)).Cross(tauA);
+	const Vec3 angularJB = (inverseWorldInertiaB * tauB.Cross(n)).Cross(tauB);
+	const float angularFactor = (angularJA + angularJB).Dot(n);
+
+	// Get world space velocity of the motion and rotation
+	const Vec3 velA = a->linearVelocity + a->angularVelocity.Cross(tauA);
+	const Vec3 velB = b->linearVelocity + b->angularVelocity.Cross(tauB);
+
 	// Collision impulse
-	const Vec3& n = contact.normal;
-	const Vec3& velAb = a->linearVelocity - b->linearVelocity;
-	const float impulseValueJ = -(1.0f + elasticity) * velAb.Dot(n) / (invMassA + invMassB);
+	const Vec3& velAb = velA - velB;
+	const float impulseValueJ = (1.0f + elasticity) * velAb.Dot(n) / (invMassA + invMassB + angularFactor); // Sign is changed here
 	const Vec3 impulse = n * impulseValueJ;
 
-	a->ApplyImpulseLinear(impulse);
-	b->ApplyImpulseLinear(impulse * -1.0f);
+	a->ApplyImpulse(ptOnA, impulse * -1.0f); // ...And here
+	b->ApplyImpulse(ptOnB, impulse * 1.0f);  // ...And here
 
 	// If object are interpenetrating, use this to set them on contact
 	const float tA = invMassA / (invMassA + invMassB);

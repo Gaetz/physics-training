@@ -70,6 +70,7 @@ Scene::Update
 */
 void Scene::Update(const float dt_sec) 
 {
+	// Gravity
 	for (int i = 0; i < bodies.size(); ++i) 
 	{
 		Body& body = bodies[i];
@@ -99,6 +100,6 @@ void Scene::Update(const float dt_sec)
 
 	// Position update
 	for (int i = 0; i < bodies.size(); ++i) {
-		bodies[i].position += bodies[i].linearVelocity * dt_sec;
+		bodies[i].Update(dt_sec);
 	}
 }
