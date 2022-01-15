@@ -13,6 +13,8 @@ public:
 
 	float inverseMass;
 	float elasticity;
+	float friction;
+
 	Shape* shape;
 
 	void Update(const float dt_sec);
