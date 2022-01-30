@@ -1534,7 +1534,8 @@ void SortBodiesBounds(const Body* bodies, const size_t num,
 	qsort(sortedArray, num * 2, sizeof(PseudoBody), CompareSAP);
 }
 
-void BuildPairs(std::vector&lt; CollisionPair &gt;&amp; collisionPairs, const PseudoBody* sortedBodies, const int num)
+void BuildPairs(std::vector&lt; CollisionPair &gt;&amp; collisionPairs, 
+	const PseudoBody* sortedBodies, const int num)
 {
 	collisionPairs.clear();
 
