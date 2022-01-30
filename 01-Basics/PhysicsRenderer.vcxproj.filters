@@ -81,7 +81,9 @@
     <ClCompile Include="Shape.cpp">
       <Filter>code\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="Broadphase.cpp" />
+    <ClCompile Include="Broadphase.cpp">
+      <Filter>code</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\application.h">
@@ -156,6 +158,8 @@
     <ClInclude Include="Contact.h">
       <Filter>code\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="Broadphase.h" />
+    <ClInclude Include="Broadphase.h">
+      <Filter>code</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

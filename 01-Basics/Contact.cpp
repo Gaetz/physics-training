@@ -18,16 +18,16 @@ void Contact::ResolveContact(Contact& contact)
 	const Mat3 inverseWorldInertiaA = a->GetInverseInertiaTensorWorldSpace();
 	const Mat3 inverseWorldInertiaB = b->GetInverseInertiaTensorWorldSpace();
 	const Vec3 n = contact.normal;
-	const Vec3 tauA = ptOnA - a->GetCenterOfMassWorldSpace();
-	const Vec3 tauB = ptOnB - b->GetCenterOfMassWorldSpace();
+	const Vec3 rA = ptOnA - a->GetCenterOfMassWorldSpace();
+	const Vec3 rB = ptOnB - b->GetCenterOfMassWorldSpace();
 
-	const Vec3 angularJA = (inverseWorldInertiaA * tauA.Cross(n)).Cross(tauA);
-	const Vec3 angularJB = (inverseWorldInertiaB * tauB.Cross(n)).Cross(tauB);
+	const Vec3 angularJA = (inverseWorldInertiaA * rA.Cross(n)).Cross(rA);
+	const Vec3 angularJB = (inverseWorldInertiaB * rB.Cross(n)).Cross(rB);
 	const float angularFactor = (angularJA + angularJB).Dot(n);
 
 	// Get world space velocity of the motion and rotation
-	const Vec3 velA = a->linearVelocity + a->angularVelocity.Cross(tauA);
-	const Vec3 velB = b->linearVelocity + b->angularVelocity.Cross(tauB);
+	const Vec3 velA = a->linearVelocity + a->angularVelocity.Cross(rA);
+	const Vec3 velB = b->linearVelocity + b->angularVelocity.Cross(rB);
 
 	// Collision impulse
 	const Vec3& velAb = velA - velB;
@@ -49,8 +49,8 @@ void Contact::ResolveContact(Contact& contact)
 	// -- Get the tengential velocities relative to the other body
 	Vec3 relativVelTengent = velTengent;
 	relativVelTengent.Normalize();
-	const Vec3 inertiaA = (inverseWorldInertiaA * tauA.Cross(relativVelTengent)).Cross(tauA);
-	const Vec3 inertiaB = (inverseWorldInertiaB * tauB.Cross(relativVelTengent)).Cross(tauB);
+	const Vec3 inertiaA = (inverseWorldInertiaA * rA.Cross(relativVelTengent)).Cross(rA);
+	const Vec3 inertiaB = (inverseWorldInertiaB * rB.Cross(relativVelTengent)).Cross(rB);
 	const float inverseInertia = (inertiaA + inertiaB).Dot(relativVelTengent);
 
 	// -- Tengential impulse for friction
