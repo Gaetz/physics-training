@@ -52,3 +52,4 @@ void ShapeBox::Build(const Vec3* pts, const int num)
 
 	centerOfMass = (bounds.maxs + bounds.mins) * 0.5f;
 }
+

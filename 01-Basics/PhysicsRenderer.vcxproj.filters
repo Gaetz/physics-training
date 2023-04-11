@@ -82,7 +82,7 @@
       <Filter>code\Physics</Filter>
     </ClCompile>
     <ClCompile Include="Broadphase.cpp">
-      <Filter>code</Filter>
+      <Filter>code\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -159,7 +159,11 @@
       <Filter>code\Physics</Filter>
     </ClInclude>
     <ClInclude Include="Broadphase.h">
+<<<<<<< HEAD
       <Filter>code</Filter>
+=======
+      <Filter>code\Physics</Filter>
+>>>>>>> 4411a82 (Some small changes)
     </ClInclude>
   </ItemGroup>
 </Project>
