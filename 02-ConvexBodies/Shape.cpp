@@ -191,10 +191,26 @@ Mat3 ShapeConvex::InertiaTensor() const
 	return inertiaTensor;
 }
 
-Vec3 ShapeConvex::Support(const Vec3& dir, const Vec3& pos, const Quat& orient, const float bias) const
+Vec3 ShapeConvex::Support(const Vec3& dir, const Vec3& pos, const Quat& orient, const float bias) const 
 {
-	// Empty for now
-	return Vec3();
+	// Find the point in furthest in direction
+	Vec3 maxPt = orient.RotatePoint(points[0]) + pos;
+	float maxDist = dir.Dot(maxPt);
+	for (int i = 1; i < points.size(); i++) {
+		const Vec3 pt = orient.RotatePoint(points[i]) + pos;
+		const float dist = dir.Dot(pt);
+
+		if (dist > maxDist) {
+			maxDist = dist;
+			maxPt = pt;
+		}
+	}
+
+	Vec3 norm = dir;
+	norm.Normalize();
+	norm *= bias;
+
+	return maxPt + norm;
 }
 
 float ShapeConvex::FastestLinearSpeed(const Vec3& angularVelocity, const Vec3& dir) const

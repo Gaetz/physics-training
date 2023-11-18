@@ -143,38 +143,6 @@ Vec3 g_boxHead[] = {
 	Vec3(h2, h2, h2),
 };
 
-Vec3 g_diamond[7 * 8];
-void FillDiamond() {
-	Vec3 pts[4 + 4];
-	pts[0] = Vec3(0.1f, 0, -1);
-	pts[1] = Vec3(1, 0, 0);
-	pts[2] = Vec3(1, 0, 0.1f);
-	pts[3] = Vec3(0.4f, 0, 0.4f);
-
-	const float pi = acosf(-1.0f);
-	const Quat quatHalf(Vec3(0, 0, 1), 2.0f * pi * 0.125f * 0.5f);
-	pts[4] = Vec3(0.8f, 0, 0.3f);
-	pts[4] = quatHalf.RotatePoint(pts[4]);
-	pts[5] = quatHalf.RotatePoint(pts[1]);
-	pts[6] = quatHalf.RotatePoint(pts[2]);
-
-	const Quat quat(Vec3(0, 0, 1), 2.0f * pi * 0.125f);
-	int idx = 0;
-	for (int i = 0; i < 7; i++) {
-		g_diamond[idx] = pts[i];
-		idx++;
-	}
-
-	Quat quatAccumulator;
-	for (int i = 1; i < 8; i++) {
-		quatAccumulator = quatAccumulator * quat;
-		for (int pt = 0; pt < 7; pt++) {
-			g_diamond[idx] = quatAccumulator.RotatePoint(pts[pt]);
-			idx++;
-		}
-	}
-}
-
 void AddStandardSandBox(std::vector<Body>& bodies) {
 	Body body;
 
@@ -229,6 +197,39 @@ void AddStandardSandBox(std::vector<Body>& bodies) {
 	bodies.push_back(body);
 }
 
+Vec3 g_diamond[7 * 8];
+void FillDiamond() 
+{
+	Vec3 pts[4 + 4];
+	pts[0] = Vec3(0.1f, 0, -1);
+	pts[1] = Vec3(1, 0, 0);
+	pts[2] = Vec3(1, 0, 0.1f);
+	pts[3] = Vec3(0.4f, 0, 0.4f);
+
+	const float pi = acosf(-1.0f);
+	const Quat quatHalf(Vec3(0, 0, 1), 2.0f * pi * 0.125f * 0.5f);
+	pts[4] = Vec3(0.8f, 0, 0.3f);
+	pts[4] = quatHalf.RotatePoint(pts[4]);
+	pts[5] = quatHalf.RotatePoint(pts[1]);
+	pts[6] = quatHalf.RotatePoint(pts[2]);
+
+	const Quat quat(Vec3(0, 0, 1), 2.0f * pi * 0.125f);
+	int idx = 0;
+	for (int i = 0; i < 7; i++) {
+		g_diamond[idx] = pts[i];
+		idx++;
+	}
+
+	Quat quatAccumulator;
+	for (int i = 1; i < 8; i++) {
+		quatAccumulator = quatAccumulator * quat;
+		for (int pt = 0; pt < 7; pt++) {
+			g_diamond[idx] = quatAccumulator.RotatePoint(pts[pt]);
+			idx++;
+		}
+	}
+}
+
 /*
 ========================================================================================================
 
@@ -281,6 +282,16 @@ void Scene::Initialize() {
 	body.shape = new ShapeSphere(0.5f);
 	bodies.push_back(body);
 
+	body.position = Vec3(-10, 0, 3);
+	body.orientation = Quat(0, 0, 0, 1);
+	body.linearVelocity = Vec3(100, 0, 0);
+	body.angularVelocity = Vec3(0, 10, 0);
+	body.inverseMass = 1.0f;
+	body.elasticity = 0.5f;
+	body.friction = 0.5f;
+	body.shape = new ShapeConvex(g_diamond, sizeof(g_diamond) / sizeof(Vec3));
+	bodies.push_back(body);
+	
 	AddStandardSandBox(bodies);
 }
 

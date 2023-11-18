@@ -3,6 +3,9 @@
 #include "code/Math/Bounds.h"
 #include "code/Math/Quat.h"
 
+extern Vec3 g_diamond[7 * 8];
+void FillDiamond();
+
 class Shape
 {
 public:
