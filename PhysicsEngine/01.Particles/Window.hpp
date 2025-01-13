@@ -12,8 +12,8 @@ public:
     void Init();
     void Close() const;
 
-    int width { 640 };
-    int height { 480 };
+    int width { 1280 };
+    int height { 720 };
 };
 
 

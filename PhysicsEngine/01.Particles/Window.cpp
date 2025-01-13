@@ -6,7 +6,7 @@ using std::string;
 
 void Window::Init() {
     SDL_Init(SDL_INIT_VIDEO);
-    const string title { "Computer Graphics with SDL3" };
+    const string title { "Physics Engine" };
     sdlWindow = SDL_CreateWindow(title.c_str(), width, height, SDL_WINDOW_RESIZABLE);
 }
 
