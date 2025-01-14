@@ -1,5 +1,5 @@
 //
-// Created by Admin on 13/01/2025.
+// Created by Gaëtan Blaise-Cazalet on 13/01/2025.
 //
 
 #ifndef PRECISION_HPP
@@ -20,8 +20,10 @@ namespace gphysics {
 
     /** Defines the precision of the square root operator. */
     #define RealSqrt sqrtf
+
     /** Defines the precision of the absolute magnitude operator. */
     #define RealAbs fabsf
+
     /** Defines the precision of the sine operator. */
     #define RealSin sinf
 
@@ -30,6 +32,7 @@ namespace gphysics {
 
     /** Defines the precision of the exponent operator. */
     #define RealExp expf
+
     /** Defines the precision of the power operator. */
     #define RealPow powf
 

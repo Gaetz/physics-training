@@ -26,6 +26,10 @@ namespace gphysics {
         }
     }
 
+    void Vec3::Clear() {
+        x = y = z = 0;
+    }
+
     void Vec3::operator*=(const real scalar) {
         x *= scalar;
         y *= scalar;

@@ -24,6 +24,7 @@ namespace gphysics {
         real Magnitude() const;
         real SquareMagnitude() const;
         void Normalize();
+        void Clear();
 
         void operator*=(real scalar);
         Vec3 operator*(real scalar) const;
