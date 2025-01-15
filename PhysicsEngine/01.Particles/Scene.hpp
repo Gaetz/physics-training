@@ -7,8 +7,9 @@
 
 #include <SDL3/SDL_events.h>
 #include "InputState.hpp"
+#include "Renderer.hpp"
 
-class Renderer;
+using gdraw::Renderer;
 
 class Scene {
 public:

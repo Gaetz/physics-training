@@ -10,25 +10,50 @@
 
 namespace gdraw {
 
-class Material {
-public:
-    explicit Material(SDL_GPUDevice* device_);
-    ~Material();
+    class Renderer;
 
-    void Clear();
+    enum class TextureFilter {
+        Nearest,
+        Linear,
+        Anisotropic
+    };
 
-    SDL_GPUDevice* device {nullptr};
-    SDL_GPUShader* shader {nullptr};
-    SDL_GPUTexture* texture {nullptr};
-    SDL_GPUSampler* sampler {nullptr};
-    SDL_GPUGraphicsPipeline* pipeline {nullptr};
+    enum class TextureWrap {
+        Repeat,
+        ClampToEdge,
+        MirroredRepeat
+    };
 
-    void LoadShader(const str& shaderFilename, u32 samplerCount, u32 uniformBufferCount, u32 storageBufferCount, u32 storageTextureCount);
-    void LoadTexture(const char* imageFilename, int desiredChannels);
-    void CreateSampler(const SDL_GPUSamplerCreateInfo& createInfo);
-    void CreatePipeline(const SDL_GPUGraphicsPipelineCreateInfo& createInfo);
-    void Bind();
-};
+    class Material {
+    public:
+        explicit Material(Renderer* renderer_);
+
+        ~Material();
+
+        void LoadShader(const str& vertexShaderFilename, const str& fragmentShaderFilename,
+                        u32 samplerCount, u32 uniformBufferCount, u32 storageBufferCount, u32 storageTextureCount);
+
+        void LoadTexture(const str& imageFilename, int desiredChannels);
+
+        void CreateSampler(TextureFilter filter, TextureWrap wrap);
+
+        void CreatePipeline();
+
+        void Bind();
+
+        void Clear();
+
+    private:
+        Renderer* renderer { nullptr };
+        SDL_GPUShader* vertexShader { nullptr };
+        SDL_GPUShader* fragmentShader { nullptr };
+        SDL_GPUTexture* texture { nullptr };
+        SDL_GPUSampler* sampler { nullptr };
+        SDL_GPUGraphicsPipeline* pipeline { nullptr };
+
+        SDL_GPUShader* LoadShader(const str& shaderFilename, u32 samplerCount, u32 uniformBufferCount, u32 storageBufferCount,
+                                  u32 storageTextureCount);
+    };
 
 } // gdraw
 

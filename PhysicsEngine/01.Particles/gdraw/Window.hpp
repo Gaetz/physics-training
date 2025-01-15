@@ -4,18 +4,22 @@
 
 #ifndef WINDOW_HPP
 #define WINDOW_HPP
-#include <SDL3/SDL_video.h>
 
-class Window {
-public:
-    SDL_Window* sdlWindow;
-    void Init();
-    void Close() const;
+#include "SDL3/SDL_video.h"
 
-    int width { 1280 };
-    int height { 720 };
-};
+namespace gdraw {
+    class Window {
+    public:
+        SDL_Window* sdlWindow { nullptr };
 
+        void Init();
+
+        void Close() const;
+
+        int width { 1280 };
+        int height { 720 };
+    };
+}
 
 
 #endif //WINDOW_HPP

@@ -21,8 +21,8 @@ namespace gphysics {
         Vec3(real x, real y, real z) : x(x), y(y), z(z), pad(0) {}
 
         void Invert();
-        real Magnitude() const;
-        real SquareMagnitude() const;
+        [[nodiscard]] real Magnitude() const;
+        [[nodiscard]] real SquareMagnitude() const;
         void Normalize();
         void Clear();
 

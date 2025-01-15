@@ -11,6 +11,9 @@
 
 using namespace std;
 
+using gdraw::Window;
+using gdraw::Renderer;
+
 int main(int argc, char **argv) {
     Window window {};
     Renderer renderer {};
