@@ -6,11 +6,7 @@
 #define RENDERER_HPP
 
 #include <SDL3/SDL_gpu.h>
-#include <vector>
-#include <string>
-
-using std::vector;
-using std::string;
+#include "Defines.hpp"
 
 class Window;
 
@@ -21,21 +17,15 @@ public:
     void End() const;
     void Close() const;
 
-    SDL_GPUShader* LoadShader(
-        const char* basePath,
-        const char* shaderFilename,
-        Uint32 samplerCount,
-        Uint32 uniformBufferCount,
-        Uint32 storageBufferCount,
-        Uint32 storageTextureCount
-    );
+    SDL_GPUDevice* GetDevice() const { return device; }
+
     void ReleaseShader(SDL_GPUShader* shader) const;
 
     SDL_Surface* LoadBMPImage(const char* basePath, const char* imageFilename, int desiredChannels);
     SDL_GPUSampler* CreateSampler(const SDL_GPUSamplerCreateInfo& createInfo) const;
     void ReleaseSurface(SDL_Surface* surface) const;
     SDL_GPUTexture* CreateTexture(const SDL_GPUTextureCreateInfo& createInfo) const;
-    void SetTextureName(SDL_GPUTexture* texture, const string& name) const;
+    void SetTextureName(SDL_GPUTexture* texture, const str& name) const;
     void ReleaseTexture(SDL_GPUTexture* texture) const;
     void ReleaseSampler(SDL_GPUSampler* sampler) const;
 
@@ -56,7 +46,7 @@ public:
 
 
     SDL_GPUBuffer* CreateBuffer(const SDL_GPUBufferCreateInfo& createInfo) const;
-    void SetBufferName(SDL_GPUBuffer* buffer, const string& name) const;
+    void SetBufferName(SDL_GPUBuffer* buffer, const str& name) const;
     SDL_GPUTransferBuffer* CreateTransferBuffer(const SDL_GPUTransferBufferCreateInfo& createInfo) const;
     void* MapTransferBuffer(SDL_GPUTransferBuffer* transferBuffer, bool cycle) const;
     void UnmapTransferBuffer(SDL_GPUTransferBuffer* transferBuffer) const;

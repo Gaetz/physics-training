@@ -27,9 +27,10 @@ endif()
 
 add_subdirectory(gplatform)
 add_subdirectory(gphysics)
+add_subdirectory(gdraw)
 
 file( GLOB graphics-with-SDL3_SOURCES *.cpp )
 add_executable(${PROJECT_NAME} ${graphics-with-SDL3_SOURCES})
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${SDL3_INCLUDE_DIRS})
-target_link_libraries(${PROJECT_NAME} SDL3::SDL3 gplatform gphysics)
+target_link_libraries(${PROJECT_NAME} SDL3::SDL3 gplatform gphysics gdraw)

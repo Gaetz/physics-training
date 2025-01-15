@@ -1,7 +1,7 @@
 #include "Window.hpp"
 
 #include <string>
-#include <SDL3/SDL.h>
+#include <../cmake-build-debug/_deps/sdl3-src/include/SDL3/SDL.h>
 using std::string;
 
 void Window::Init() {
