@@ -6,7 +6,9 @@ void Scene01Clear::Load(Renderer& renderer) {
 }
 
 bool Scene01Clear::Update(float dt) {
-    return ManageInput(inputState);
+    bool stillRunning = ManageInput(inputState);
+    quad->Update(dt);
+    return stillRunning;
 }
 
 void Scene01Clear::Draw(Renderer& renderer) {

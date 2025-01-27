@@ -88,8 +88,6 @@ namespace gdraw
     }
 
     void QuadMesh::Draw() {
-        FragMultiplyUniform fragMultiplyUniform0{ 1.0f, 1.0f, 1.0f, 1.0f };
-        renderer->PushFragmentUniformData(0, &fragMultiplyUniform0, sizeof(FragMultiplyUniform));
         renderer->DrawIndexedPrimitives(6, 1, 0, 0, 0);
     }
 

@@ -10,8 +10,8 @@
 namespace gdraw
 {
     void Quad::Load() {
-        material.LoadVertexShader("TexturedQuad.vert", 0, 0, 0, 0);
-        material.LoadFragmentShader("TexturedQuad.frag", 1, 0, 0, 0);
+        material.LoadVertexShader("TexturedQuadWithMatrix.vert", 0, 1, 0, 0);
+        material.LoadFragmentShader("TexturedQuadWithMultiplyColor.frag", 1, 1, 0, 0);
         material.LoadTexture("ravioli.bmp", 4);
         material.CreateSampler(TextureFilter::Nearest, TextureWrap::ClampToEdge);
         material.CreatePipeline();
@@ -20,13 +20,13 @@ namespace gdraw
 
     void Quad::Update(f32 dt) {
         time += dt;
-        Mat4 matrixUniform = Mat4::CreateRotationZ(time) * Mat4::CreateTranslation(0.0f, 0.0f, 0);
-        mesh.SetTransform(matrixUniform);
+        transform = Mat4::CreateRotationZ(time) * Mat4::CreateTranslation(0.0f, 0.0f, 0);
     }
 
     void Quad::Bind() {
         material.Bind();
         mesh.Bind();
+        mesh.SetTransform(transform);
     }
 
     void Quad::Draw() {

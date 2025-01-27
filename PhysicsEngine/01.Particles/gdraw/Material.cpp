@@ -233,9 +233,17 @@ namespace gdraw {
         renderer->BindGraphicsPipeline(pipeline);
         SDL_GPUTextureSamplerBinding textureSamplerBinding { .texture = texture, .sampler = sampler };
         renderer->BindFragmentSamplers(0, textureSamplerBinding, 1);
+        renderer->PushFragmentUniformData(0, &colorMultiply, sizeof(FragMultiplyUniform));
     }
 
     void Material::Unload() {
         Clear();
+    }
+
+    void Material::SetFragmentColorMultiply(float r, float g, float b, float a) {
+        colorMultiply.r = r;
+        colorMultiply.g = g;
+        colorMultiply.b = b;
+        colorMultiply.a = a;
     }
 } // gdraw

@@ -26,8 +26,8 @@ namespace gdraw
     private:
         Material material;
         QuadMesh mesh;
-        Mat4 transform;
-        float time;;
+        Mat4 transform { Mat4::Identity };
+        f32 time { 0.0f };
 
         void Bind();
     };

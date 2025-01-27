@@ -7,6 +7,7 @@
 
 #include <SDL3/SDL_gpu.h>
 #include "Defines.hpp"
+#include "VertexTypes.hpp"
 
 namespace gdraw
 {
@@ -41,6 +42,8 @@ namespace gdraw
         void Bind();
         void Unload();
 
+        void SetFragmentColorMultiply(float r, float g, float b, float a);
+
     private:
         Renderer* renderer{nullptr};
         SDL_GPUShader* vertexShader{nullptr};
@@ -48,6 +51,7 @@ namespace gdraw
         SDL_GPUTexture* texture{nullptr};
         SDL_GPUSampler* sampler{nullptr};
         SDL_GPUGraphicsPipeline* pipeline{nullptr};
+        FragMultiplyUniform colorMultiply {1, 1, 1, 1};
 
         SDL_GPUShader* LoadShader(const str& shaderFilename, u32 samplerCount, u32 uniformBufferCount,
                                   u32 storageBufferCount,
