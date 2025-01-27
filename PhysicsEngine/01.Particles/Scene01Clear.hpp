@@ -5,7 +5,11 @@
 #ifndef SCENE01CLEAR_HPP
 #define SCENE01CLEAR_HPP
 
+#include <Quad.hpp>
+
 #include "Scene.hpp"
+
+using gdraw::Quad;
 
 class Scene01Clear : public Scene {
 public:
@@ -15,6 +19,7 @@ public:
     void Unload(Renderer& renderer) override;
 
 private:
+    uptr<Quad> quad;
     InputState inputState;
 };
 

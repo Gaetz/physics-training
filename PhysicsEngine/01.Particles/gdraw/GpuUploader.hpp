@@ -7,26 +7,26 @@
 
 #include <SDL3/SDL_gpu.h>
 #include <cstring>
+#include <Defines.hpp>
 
 class GPUUploader {
 public:
     explicit GPUUploader(SDL_GPUDevice* device_);
-    ~GPUUploader();
 
     template<typename T>
     void PrepareTextureData(SDL_Surface* surface) {
         Uint32 bufferSize = surface->w * surface->h * 4;
-        SDL_GPUTransferBufferCreateInfo textureTransferBufferCreateInfo{
-            .usage = SDL_GPU_TRANSFERBUFFERUSAGE_UPLOAD,
-            .size = bufferSize
-        };
-        SDL_GPUTransferBuffer* textureTransferBuffer = SDL_CreateGPUTransferBuffer(
-            device, &textureTransferBufferCreateInfo);
+        PrepareTransferBuffer(bufferSize);
+        // Mapping data
         auto textureTransferData = static_cast<T*>(SDL_MapGPUTransferBuffer(
-            device, textureTransferBuffer, false));
+            device, transferBuffer, false));
         std::memcpy(textureTransferData, surface->pixels, surface->w * surface->h * 4);
-        SDL_UnmapGPUTransferBuffer(device, textureTransferBuffer);
+        SDL_UnmapGPUTransferBuffer(device, transferBuffer);
     }
+
+    void PrepareTransferBuffer(u32 size);
+    void* MapTransferBuffer(bool cycle) const;
+    void UnmapTransferBuffer() const ;
 
     void Begin();
     void UploadToBuffer(const SDL_GPUTransferBufferLocation& source, const SDL_GPUBufferRegion& destination, bool cycle) const;

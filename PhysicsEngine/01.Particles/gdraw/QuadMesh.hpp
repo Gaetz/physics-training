@@ -2,21 +2,39 @@
 // Created by Gaëtan Blaise-Cazalet on 15/01/2025.
 //
 
-#ifndef GDRAW_QUAD_HPP
-#define GDRAW_QUAD_HPP
+#ifndef GDRAW_QUADMESH_HPP
+#define GDRAW_QUADMESH_HPP
+#include <SDL3/SDL_gpu.h>
 
-namespace gdraw {
-class QuadMesh {
-public:
-    QuadMesh();
-    void Bind();
+namespace gphysics {
+    class Mat4;
+}
 
-private:
+using gphysics::Mat4;
 
-    void Load();
+namespace gdraw
+{
+    class Renderer;
 
+    class QuadMesh
+    {
+    public:
+        explicit QuadMesh(Renderer* renderer_);
+        ~QuadMesh();
+        void Load() const;
+        void Bind();
+        void Draw();
+        void Unload();
+        void SetTransform(const Mat4& transform_);
 
-};
+    private:
+        Renderer* renderer{nullptr};
+        SDL_GPUBuffer* vertexBuffer{ nullptr };
+        SDL_GPUBuffer* indexBuffer{ nullptr };
+        float time;
+
+        void Clear();
+    };
 }
 
 

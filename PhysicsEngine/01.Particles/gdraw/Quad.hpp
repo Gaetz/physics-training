@@ -7,15 +7,30 @@
 
 #include "Material.hpp"
 #include "QuadMesh.hpp"
+#include "Mat4.h"
 
-namespace gdraw {
-class Quad {
+using gphysics::Mat4;
 
+namespace gdraw
+{
+    class Quad
+    {
+    public:
+        explicit Quad(Renderer& renderer_) : material(&renderer_), mesh(&renderer_) {}
 
-private:
-    Material material;
-//    QuadMesh mesh;
-};
+        void Load();
+        void Update(f32 dt);
+        void Draw();
+        void Unload();
+
+    private:
+        Material material;
+        QuadMesh mesh;
+        Mat4 transform;
+        float time;;
+
+        void Bind();
+    };
 }
 
 
