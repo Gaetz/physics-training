@@ -10,12 +10,12 @@
 namespace gdraw
 {
     void Quad::Load() {
-        mesh.Load();
-        material.LoadVertexShader("TexturedQuadWithMatrix.vert", 0, 1, 0, 0);
-        material.LoadFragmentShader("TexturedQuadWithMultiplyColor.frag", 1, 1, 0, 0);
-        material.CreateSampler(TextureFilter::Linear, TextureWrap::ClampToEdge);
+        material.LoadVertexShader("TexturedQuad.vert", 0, 0, 0, 0);
+        material.LoadFragmentShader("TexturedQuad.frag", 1, 0, 0, 0);
         material.LoadTexture("ravioli.bmp", 4);
+        material.CreateSampler(TextureFilter::Nearest, TextureWrap::ClampToEdge);
         material.CreatePipeline();
+        mesh.Load();
     }
 
     void Quad::Update(f32 dt) {

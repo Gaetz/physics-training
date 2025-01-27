@@ -20,7 +20,6 @@ namespace gdraw
     {
     public:
         explicit QuadMesh(Renderer* renderer_);
-        ~QuadMesh();
         void Load() const;
         void Bind();
         void Draw();

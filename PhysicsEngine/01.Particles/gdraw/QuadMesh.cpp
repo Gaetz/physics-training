@@ -29,20 +29,18 @@ namespace gdraw
         indexBuffer = renderer->CreateBuffer(indexBufferCreateInfo);
     }
 
-    QuadMesh::~QuadMesh() {}
-
     void QuadMesh::Load() const {
         GPUUploader uploader{renderer->device};
-        uploader.PrepareTransferBuffer((sizeof(PositionTextureVertex) * 4) + (sizeof(Uint16) * 6));
+        uploader.PrepareTransferBuffer((sizeof(PositionTextureVertex) * 4) + (sizeof(u16) * 6));
 
         // Map the transfer buffer and fill it with data (data is bound to the transfer buffer)
         auto transferData = static_cast<PositionTextureVertex*>(uploader.MapTransferBuffer(false));
 
-        transferData[0] = PositionTextureVertex{-0.5f, -0.5f, 0, 0, 0};
-        transferData[1] = PositionTextureVertex{0.5f, -0.5f, 0, 1, 0};
-        transferData[2] = PositionTextureVertex{0.5f, 0.5f, 0, 1, 1};
-        transferData[3] = PositionTextureVertex{-0.5f, 0.5f, 0, 0, 1};
-        auto indexData = reinterpret_cast<Uint16*>(&transferData[4]);
+        transferData[0] = PositionTextureVertex{-0.5f, 0.5f, 0, 0, 0};
+        transferData[1] = PositionTextureVertex{0.5f, 0.5f, 0, 1, 0};
+        transferData[2] = PositionTextureVertex{0.5f, -0.5f, 0, 1, 1};
+        transferData[3] = PositionTextureVertex{-0.5f, -0.5f, 0, 0, 1};
+        auto indexData = reinterpret_cast<u16*>(&transferData[4]);
         indexData[0] = 0;
         indexData[1] = 1;
         indexData[2] = 2;
@@ -73,7 +71,7 @@ namespace gdraw
         {
             .buffer = indexBuffer,
             .offset = 0,
-            .size = sizeof(Uint16) * 6
+            .size = sizeof(u16) * 6
         };
         uploader.Begin();
         uploader.UploadToBuffer(transferVertexBufferLocation, vertexBufferRegion, false);

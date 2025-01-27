@@ -15,12 +15,12 @@ public:
 
     template<typename T>
     void PrepareTextureData(SDL_Surface* surface) {
-        Uint32 bufferSize = surface->w * surface->h * 4;
+        u32 bufferSize = surface->w * surface->h * 4;
         PrepareTransferBuffer(bufferSize);
         // Mapping data
         auto textureTransferData = static_cast<T*>(SDL_MapGPUTransferBuffer(
             device, transferBuffer, false));
-        std::memcpy(textureTransferData, surface->pixels, surface->w * surface->h * 4);
+        std::memcpy(textureTransferData, surface->pixels, bufferSize);
         SDL_UnmapGPUTransferBuffer(device, transferBuffer);
     }
 

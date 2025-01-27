@@ -28,7 +28,9 @@ void GPUUploader::Begin() {
 
 void GPUUploader::UploadToBuffer(const SDL_GPUTransferBufferLocation& source,
                                  const SDL_GPUBufferRegion& destination,
-                                 bool cycle) const { SDL_UploadToGPUBuffer(copyPass, &source, &destination, cycle); }
+                                 bool cycle) const {
+    SDL_UploadToGPUBuffer(copyPass, &source, &destination, cycle);
+}
 
 void GPUUploader::UploadToTexture(const SDL_GPUTextureTransferInfo& source,
                                   const SDL_GPUTextureRegion& destination, bool cycle) const {
@@ -39,4 +41,5 @@ void GPUUploader::End() {
     SDL_EndGPUCopyPass(copyPass);
     SDL_SubmitGPUCommandBuffer(uploadCmdBuf);
     SDL_ReleaseGPUTransferBuffer(device, transferBuffer);
+    transferBuffer = nullptr;
 }
