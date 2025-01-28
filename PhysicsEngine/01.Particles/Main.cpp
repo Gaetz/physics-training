@@ -8,6 +8,7 @@
 #include "Window.hpp"
 #include "Renderer.hpp"
 #include "Scene01Clear.hpp"
+#include "Scene02Quad.hpp"
 
 using namespace std;
 
@@ -21,7 +22,7 @@ int main(int argc, char **argv) {
     window.Init();
     renderer.Init(window);
 
-    auto scene = std::make_unique<Scene01Clear>();
+    auto scene = std::make_unique<Scene02Quad>();
     scene->Load(renderer);
 
     bool isRunning { true };

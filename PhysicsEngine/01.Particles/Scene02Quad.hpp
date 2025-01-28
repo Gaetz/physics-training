@@ -2,13 +2,16 @@
 // Created by Gaëtan Blaise-Cazalet on 19/11/2024.
 //
 
-#ifndef SCENE01CLEAR_HPP
-#define SCENE01CLEAR_HPP
+#ifndef SCENE02QUAD_HPP
+#define SCENE02QUAD_HPP
+
+#include <Quad.hpp>
 
 #include "Scene.hpp"
 
+using gdraw::Quad;
 
-class Scene01Clear : public Scene {
+class Scene02Quad : public Scene {
 public:
     void Load(Renderer& renderer) override;
     bool Update(float dt) override;
@@ -16,9 +19,10 @@ public:
     void Unload(Renderer& renderer) override;
 
 private:
+    uptr<Quad> quad;
     InputState inputState;
 };
 
 
 
-#endif //SCENE01CLEAR_HPP
+#endif //SCENE02QUAD_HPP
