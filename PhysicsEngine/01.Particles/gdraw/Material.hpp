@@ -1,5 +1,5 @@
 //
-// Created by Admin on 15/01/2025.
+// Created by Gaëtan Blaise-Cazalet on 15/01/2025.
 //
 
 #ifndef GDRAW_MATERIAL_HPP
@@ -38,13 +38,14 @@ namespace gdraw
                                 u32 storageBufferCount, u32 storageTextureCount);
         void LoadTexture(const str& imageFilename, int desiredChannels);
         void CreateSampler(TextureFilter filter, TextureWrap wrap);
-        void CreatePipeline();
+        virtual void CreatePipeline() = 0;
+
         void Bind();
         void Unload();
 
         void SetFragmentColorMultiply(float r, float g, float b, float a);
 
-    private:
+    protected:
         Renderer* renderer{nullptr};
         SDL_GPUShader* vertexShader{nullptr};
         SDL_GPUShader* fragmentShader{nullptr};

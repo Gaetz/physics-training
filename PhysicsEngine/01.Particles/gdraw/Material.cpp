@@ -1,5 +1,5 @@
 //
-// Created by Admin on 15/01/2025.
+// Created by Gaëtan Blaise-Cazalet on 15/01/2025.
 //
 
 #include "Material.hpp"
@@ -16,7 +16,7 @@ namespace gdraw {
         const char* basePath = SDL_GetBasePath();
 
         // Auto-detect the shader stage from the file name for convenience
-        SDL_GPUShaderStage stage;
+        SDL_GPUShaderStage stage { SDL_GPU_SHADERSTAGE_VERTEX };
         if (SDL_strstr(shaderFilename.c_str(), ".vert")) { stage = SDL_GPU_SHADERSTAGE_VERTEX; }
         else if (
                 SDL_strstr(shaderFilename.c_str(), ".frag")) { stage = SDL_GPU_SHADERSTAGE_FRAGMENT; }
@@ -27,7 +27,7 @@ namespace gdraw {
         char fullPath[256];
         SDL_GPUShaderFormat backendFormats = SDL_GetGPUShaderFormats(renderer->device);
         SDL_GPUShaderFormat format = SDL_GPU_SHADERFORMAT_INVALID;
-        const char* entrypoint;
+        const char* entrypoint { "main" };
 
         if (backendFormats & SDL_GPU_SHADERFORMAT_SPIRV) {
             SDL_snprintf(fullPath, sizeof(fullPath), "%sContent/Shaders/Compiled/SPIRV/%s.spv", basePath,
@@ -86,6 +86,7 @@ namespace gdraw {
         SDL_snprintf(fullPath, sizeof(fullPath), "%sContent/Images/%s", basePath, imageFilename.c_str());
         SDL_Surface* surface = SDL_LoadBMP(fullPath);
         if (surface == nullptr) { SDL_Log("Failed to load BMP: %s", SDL_GetError()); }
+
         if (desiredChannels == 4) { format = SDL_PIXELFORMAT_ABGR8888; }
         else {
             SDL_assert(!"Unexpected desiredChannels");
@@ -159,62 +160,6 @@ namespace gdraw {
         }
 
         sampler = SDL_CreateGPUSampler(renderer->device, &createInfo);
-    }
-
-    void Material::CreatePipeline() {
-        // Create the pipeline
-        SDL_GPUGraphicsPipelineCreateInfo pipelineCreateInfo = {
-                .vertex_shader = vertexShader,
-                .fragment_shader = fragmentShader,
-                // This is set up to match the vertex shader layout!
-                .vertex_input_state = SDL_GPUVertexInputState {
-                        .vertex_buffer_descriptions = new SDL_GPUVertexBufferDescription[1] {
-                                {
-                                        .slot = 0,
-                                        .pitch = sizeof(PositionTextureVertex),
-                                        .input_rate = SDL_GPU_VERTEXINPUTRATE_VERTEX,
-                                        .instance_step_rate = 0,
-                                }
-                        },
-                        .num_vertex_buffers = 1,
-                        .vertex_attributes = new SDL_GPUVertexAttribute[2] {
-                                {
-                                        .location = 0,
-                                        .buffer_slot = 0,
-                                        .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3,
-                                        .offset = 0
-                                },
-                                {
-                                        .location = 1,
-                                        .buffer_slot = 0,
-                                        .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT2,
-                                        .offset = sizeof(float) * 3
-                                }
-                        },
-                        .num_vertex_attributes = 2,
-                },
-                .primitive_type = SDL_GPU_PRIMITIVETYPE_TRIANGLELIST,
-                .target_info = {
-                        .color_target_descriptions = new SDL_GPUColorTargetDescription[1] {{
-                                                                                                   .format = SDL_GetGPUSwapchainTextureFormat(
-                                                                                                           renderer->device,
-                                                                                                           renderer->renderWindow),
-                                                                                                   .blend_state = {
-                                                                                                           .src_color_blendfactor = SDL_GPU_BLENDFACTOR_SRC_ALPHA,
-                                                                                                           .dst_color_blendfactor = SDL_GPU_BLENDFACTOR_ONE_MINUS_SRC_ALPHA,
-                                                                                                           .color_blend_op = SDL_GPU_BLENDOP_ADD,
-                                                                                                           .src_alpha_blendfactor = SDL_GPU_BLENDFACTOR_SRC_ALPHA,
-                                                                                                           .dst_alpha_blendfactor = SDL_GPU_BLENDFACTOR_ONE_MINUS_SRC_ALPHA,
-                                                                                                           .alpha_blend_op = SDL_GPU_BLENDOP_ADD,
-                                                                                                           .enable_blend = true,
-                                                                                                   }
-                                                                                           }},
-                        .num_color_targets = 1,
-                },
-        };
-        pipeline = SDL_CreateGPUGraphicsPipeline(renderer->device, &pipelineCreateInfo);
-        renderer->ReleaseShader(vertexShader);
-        renderer->ReleaseShader(fragmentShader);
     }
 
     void Material::LoadVertexShader(const str& vertexShaderFilename, u32 samplerCount, u32 uniformBufferCount,

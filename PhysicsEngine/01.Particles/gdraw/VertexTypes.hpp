@@ -1,5 +1,5 @@
 //
-// Created by Admin on 15/01/2025.
+// Created by Gaëtan Blaise-Cazalet on 15/01/2025.
 //
 
 #ifndef GDRAW_VERTEXTYPES_HPP

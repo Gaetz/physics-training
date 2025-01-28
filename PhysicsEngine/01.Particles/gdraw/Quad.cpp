@@ -5,7 +5,6 @@
 #include "Quad.hpp"
 
 #include <VertexTypes.hpp>
-//#include <Mat4.hpp>
 
 namespace gdraw
 {

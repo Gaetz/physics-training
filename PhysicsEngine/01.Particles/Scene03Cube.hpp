@@ -2,8 +2,8 @@
 // Created by Gaëtan Blaise-Cazalet on 28/01/2024.
 //
 
-#ifndef SCENE02QUAD_HPP
-#define SCENE02QUAD_HPP
+#ifndef SCENE03CUBE_HPP
+#define SCENE03CUBE_HPP
 
 #include <Quad.hpp>
 
@@ -11,7 +11,7 @@
 
 using gdraw::Quad;
 
-class Scene02Quad : public Scene {
+class Scene03Cube : public Scene {
 public:
     void Load(Renderer& renderer) override;
     bool Update(float dt) override;
@@ -25,4 +25,4 @@ private:
 
 
 
-#endif //SCENE02QUAD_HPP
+#endif //SCENE03CUBE_HPP

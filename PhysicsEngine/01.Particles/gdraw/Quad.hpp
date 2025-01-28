@@ -5,7 +5,7 @@
 #ifndef GDRAW_QUAD_HPP
 #define GDRAW_QUAD_HPP
 
-#include "Material.hpp"
+#include "QuadMaterial.hpp"
 #include "QuadMesh.hpp"
 #include "Mat4.h"
 
@@ -24,7 +24,7 @@ namespace gdraw
         void Unload();
 
     private:
-        Material material;
+        QuadMaterial material;
         QuadMesh mesh;
         Mat4 transform { Mat4::Identity };
         f32 time { 0.0f };
