@@ -1,24 +1,24 @@
 #include "Scene03Cube.hpp"
 
 void Scene03Cube::Load(Renderer& renderer) {
-    quad = std::make_unique<Quad>(renderer);
-    quad->Load();
+    cube = std::make_unique<Cube>(renderer);
+    cube->Load();
 }
 
 bool Scene03Cube::Update(float dt) {
     bool stillRunning = ManageInput(inputState);
-    quad->Update(dt);
+    cube->Update(dt);
     return stillRunning;
 }
 
 void Scene03Cube::Draw(Renderer& renderer) {
     renderer.Begin();
 
-    quad->Draw();
+    cube->Draw();
 
     renderer.End();
 }
 
 void Scene03Cube::Unload(Renderer& renderer) {
-    quad->Unload();
+    cube->Unload();
 }

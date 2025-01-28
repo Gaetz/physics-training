@@ -12,15 +12,28 @@
 namespace gdraw {
 
     void Renderer::Init(Window& window) {
+        // Init device
         renderWindow = window.sdlWindow;
         device = SDL_CreateGPUDevice(
                 SDL_GPU_SHADERFORMAT_SPIRV | SDL_GPU_SHADERFORMAT_DXIL | SDL_GPU_SHADERFORMAT_MSL,
                 true,
                 nullptr);
         SDL_ClaimWindowForGPUDevice(device, renderWindow);
+
+        // Init depth texture
+        SDL_GPUTextureCreateInfo depthTextureInfo {
+                .type = SDL_GPU_TEXTURETYPE_2D,
+                .format = SDL_GPU_TEXTUREFORMAT_D16_UNORM,
+                .usage = SDL_GPU_TEXTUREUSAGE_DEPTH_STENCIL_TARGET,
+                .width = static_cast<u32>(window.width),
+                .height = static_cast<u32>(window.height),
+                .layer_count_or_depth = 1,
+                .num_levels = 1,
+        };
+        depthTexture = SDL_CreateGPUTexture(device, &depthTextureInfo);
     }
 
-    void Renderer::Begin(SDL_GPUDepthStencilTargetInfo* depthStencilTargetInfo) {
+    void Renderer::Begin() {
         cmdBuffer = SDL_AcquireGPUCommandBuffer(device);
         if (cmdBuffer == nullptr) {
             SDL_Log("AcquireGPUCommandBuffer failed: %s", SDL_GetError());
@@ -31,13 +44,25 @@ namespace gdraw {
         }
 
         if (swapchainTexture != nullptr) {
+            // Color
             SDL_GPUColorTargetInfo colorTargetInfo = {};
             colorTargetInfo.texture = swapchainTexture;
             colorTargetInfo.clear_color = SDL_FColor { 0.392f, 0.584f, 0.929f, 1.0f };
             colorTargetInfo.load_op = SDL_GPU_LOADOP_CLEAR;
             colorTargetInfo.store_op = SDL_GPU_STOREOP_STORE;
 
-            renderPass = SDL_BeginGPURenderPass(cmdBuffer, &colorTargetInfo, 1, depthStencilTargetInfo);
+            // Depth
+            SDL_GPUDepthStencilTargetInfo depthStencilTargetInfo;
+            SDL_zero(depthStencilTargetInfo);
+            depthStencilTargetInfo.clear_depth = 1.0f;
+            depthStencilTargetInfo.load_op = SDL_GPU_LOADOP_CLEAR;
+            depthStencilTargetInfo.store_op = SDL_GPU_STOREOP_DONT_CARE;
+            depthStencilTargetInfo.stencil_load_op = SDL_GPU_LOADOP_DONT_CARE;
+            depthStencilTargetInfo.stencil_store_op = SDL_GPU_STOREOP_DONT_CARE;
+            depthStencilTargetInfo.texture = depthTexture;
+            depthStencilTargetInfo.cycle = true;
+
+            renderPass = SDL_BeginGPURenderPass(cmdBuffer, &colorTargetInfo, 1, &depthStencilTargetInfo);
         }
     }
 
@@ -47,6 +72,7 @@ namespace gdraw {
     }
 
     void Renderer::Close() const {
+        SDL_ReleaseGPUTexture(device, depthTexture);
         SDL_ReleaseWindowFromGPUDevice(device, renderWindow);
         SDL_DestroyGPUDevice(device);
     }

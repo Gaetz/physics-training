@@ -5,11 +5,11 @@
 #ifndef SCENE03CUBE_HPP
 #define SCENE03CUBE_HPP
 
-#include <Quad.hpp>
+#include <Cube.hpp>
 
 #include "Scene.hpp"
 
-using gdraw::Quad;
+using gdraw::Cube;
 
 class Scene03Cube : public Scene {
 public:
@@ -19,7 +19,7 @@ public:
     void Unload(Renderer& renderer) override;
 
 private:
-    uptr<Quad> quad;
+    uptr<Cube> cube;
     InputState inputState;
 };
 

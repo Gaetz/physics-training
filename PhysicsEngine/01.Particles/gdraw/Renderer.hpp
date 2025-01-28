@@ -16,7 +16,7 @@ namespace gdraw {
     public:
         void Init(Window& window);
 
-        void Begin(SDL_GPUDepthStencilTargetInfo* depthStencilTargetInfo = nullptr);
+        void Begin();
 
         void End() const;
 
@@ -90,6 +90,7 @@ namespace gdraw {
         SDL_Window* renderWindow { nullptr };
         SDL_GPUCommandBuffer* cmdBuffer { nullptr };
         SDL_GPUTexture* swapchainTexture { nullptr };
+        SDL_GPUTexture* depthTexture { nullptr };
         SDL_GPURenderPass* renderPass { nullptr };
 
         SDL_GPUCopyPass* copyPass { nullptr };

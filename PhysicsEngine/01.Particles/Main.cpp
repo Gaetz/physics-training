@@ -9,6 +9,7 @@
 #include "Renderer.hpp"
 #include "Scene01Clear.hpp"
 #include "Scene02Quad.hpp"
+#include "Scene03Cube.hpp"
 
 using namespace std;
 

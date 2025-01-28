@@ -2,13 +2,13 @@
 // Created by gaetz on 28/01/2025.
 //
 
-#include "QuadMaterial.hpp"
+#include "CubeMaterial.hpp"
 #include <SDL3/SDL.h>
 #include "Renderer.hpp"
 
 namespace gdraw {
 
-    void QuadMaterial::CreatePipeline() {
+    void CubeMaterial::CreatePipeline() {
         // Create the pipeline
         SDL_GPUGraphicsPipelineCreateInfo pipelineCreateInfo = {
                 .vertex_shader = vertexShader,
@@ -43,7 +43,7 @@ namespace gdraw {
                 .primitive_type = SDL_GPU_PRIMITIVETYPE_TRIANGLELIST,
                 .rasterizer_state = {
                         .fill_mode = SDL_GPU_FILLMODE_FILL,
-                        .cull_mode = SDL_GPU_CULLMODE_NONE,
+                        .cull_mode = SDL_GPU_CULLMODE_BACK,
                         .front_face = SDL_GPU_FRONTFACE_CLOCKWISE,
                 },
                 .depth_stencil_state = {.compare_op = SDL_GPU_COMPAREOP_LESS, .enable_depth_test = true, .enable_depth_write = true},
