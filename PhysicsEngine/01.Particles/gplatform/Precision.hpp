@@ -10,8 +10,6 @@
 #define SINGLE_PRECISION 1
 #define DOUBLE_PRECISION 0
 
-namespace gphysics {
-
 #if SINGLE_PRECISION
 
     using real = f32;
@@ -59,6 +57,5 @@ namespace gphysics {
     #define PI 3.14159265358979
 
 #endif
-}
 
 #endif //PRECISION_HPP

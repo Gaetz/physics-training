@@ -26,6 +26,7 @@ if (NOT SDL3_FOUND) # If there's none, fetch and build SDL3
 endif()
 
 add_subdirectory(gplatform)
+add_subdirectory(gmath)
 add_subdirectory(gphysics)
 add_subdirectory(gdraw)
 

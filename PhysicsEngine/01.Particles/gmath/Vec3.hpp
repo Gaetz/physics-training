@@ -4,10 +4,10 @@
 
 #include "Precision.hpp"
 
-#ifndef GPHYSICS_VEC3_HPP
-#define GPHYSICS_VEC3_HPP
+#ifndef GMATH_VEC3_HPP
+#define GMATH_VEC3_HPP
 
-namespace gphysics {
+namespace gmath {
     class Vec3 {
     public:
         real x;
@@ -71,4 +71,4 @@ namespace gphysics {
 }
 
 
-#endif //GPHYSICS_VEC3_HPP
+#endif //GMATH_VEC3_HPP

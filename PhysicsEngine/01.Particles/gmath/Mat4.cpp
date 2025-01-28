@@ -2,7 +2,7 @@
 
 #include <cstdlib>
 
-namespace gphysics
+namespace gmath
 {
 	const Mat4 Mat4::Identity
 	{
@@ -11,46 +11,6 @@ namespace gphysics
 		0.0f, 0.0f, 1.0f, 0.0f,
 		0.0f, 0.0f, 0.0f, 1.0f
 	};
-
-	Mat4 Mat4::CreateRotationMatrix(float x, float y, float z, float angle)
-	{
-		Mat4 result{};
-
-		float lengthSquared = x * x + y * y + z * z;
-		if ((lengthSquared != 1.0f) && (lengthSquared != 0.0f))
-		{
-			float iLength = 1.0f / sqrtf(lengthSquared);
-			x *= iLength;
-			y *= iLength;
-			z *= iLength;
-		}
-
-		float sinRes = sinf(angle);
-		float cosRes = cosf(angle);
-		float t = 1.0f - cosRes;
-
-		result.m0 = x * x * t + cosRes;
-		result.m1 = y * x * t + z * sinRes;
-		result.m2 = z * x * t - y * sinRes;
-		result.m3 = 0.0f;
-
-		result.m4 = x * y * t - z * sinRes;
-		result.m5 = y * y * t + cosRes;
-		result.m6 = z * y * t + x * sinRes;
-		result.m7 = 0.0f;
-
-		result.m8 = x * z * t + y * sinRes;
-		result.m9 = y * z * t - x * sinRes;
-		result.m10 = z * z * t + cosRes;
-		result.m0 = 0.0f;
-
-		result.m4 = 0.0f;
-		result.m8 = 0.0f;
-		result.m12 = 0.0f;
-		result.m15 = 1.0f;
-
-		return result;
-	}
 
 	Mat4 Mat4::CreateRotationZ(float radians)
 	{

@@ -1,9 +1,9 @@
 #pragma once
 
-#ifndef GPHYSICS_MAT4_HPP
-#define GPHYSICS_MAT4_HPP
+#ifndef GMATH_MAT4_HPP
+#define GMATH_MAT4_HPP
 
-namespace gphysics {
+namespace gmath {
 class Mat4 
 {
 public:
@@ -25,7 +25,6 @@ public:
 
 	static const Mat4 Identity;
 
-	static Mat4 CreateRotationMatrix(float axisX, float axisY, float axisZ, float angle);
 	static Mat4 CreateRotationZ(float angle);
 	static Mat4 CreateRotationX(float angle);
 	static Mat4 CreateRotationY(float angle);
@@ -39,4 +38,4 @@ public:
 };
 }
 
-#endif //GPHYSICS_MAT4_HPP
+#endif //GMATH_MAT4_HPP

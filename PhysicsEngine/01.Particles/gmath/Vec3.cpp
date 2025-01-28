@@ -4,7 +4,7 @@
 
 #include "Vec3.hpp"
 
-namespace gphysics {
+namespace gmath {
     void Vec3::Invert() {
         x = -x;
         y = -y;

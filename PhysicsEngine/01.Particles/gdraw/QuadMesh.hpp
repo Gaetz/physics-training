@@ -6,11 +6,11 @@
 #define GDRAW_QUADMESH_HPP
 #include <SDL3/SDL_gpu.h>
 
-namespace gphysics {
+namespace gmath {
     class Mat4;
 }
 
-using gphysics::Mat4;
+using gmath::Mat4;
 
 namespace gdraw
 {

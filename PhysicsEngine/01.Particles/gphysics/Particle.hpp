@@ -6,6 +6,9 @@
 #define GPHYSICS_PARTICLE_HPP
 
 #include "Vec3.hpp"
+#include "Precision.hpp"
+
+using gmath::Vec3;
 
 namespace gphysics
 {

@@ -9,7 +9,7 @@
 #include "QuadMesh.hpp"
 #include "Mat4.h"
 
-using gphysics::Mat4;
+using gmath::Mat4;
 
 namespace gdraw
 {
