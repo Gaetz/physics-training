@@ -5,6 +5,16 @@
 #include "Vec3.hpp"
 
 namespace gmath {
+
+    const Vec3 Vec3::zero { 0, 0, 0 };
+    const Vec3 Vec3::one { 1, 1, 1 };
+    const Vec3 Vec3::up { 0, 1, 0 };
+    const Vec3 Vec3::right { 1, 0, 0 };
+    const Vec3 Vec3::forward { 0, 0, -1 };
+    const Vec3 Vec3::down { 0, -1, 0 };
+    const Vec3 Vec3::left { -1, 0, 0 };
+    const Vec3 Vec3::backward { 0, 0, 1 };
+    
     void Vec3::Invert() {
         x = -x;
         y = -y;
@@ -19,11 +29,12 @@ namespace gmath {
         return x * x + y * y + z * z;
     }
 
-    void Vec3::Normalize() {
+    Vec3& Vec3::Normalize() {
         real length = Magnitude();
         if (length > 0) {
             (*this) *= ((real)1)/length;
         }
+        return *this;
     }
 
     void Vec3::Clear() {

@@ -20,10 +20,19 @@ namespace gmath {
         Vec3() : x(0), y(0), z(0), pad(0) {}
         Vec3(real x, real y, real z) : x(x), y(y), z(z), pad(0) {}
 
+        static const Vec3 zero;
+        static const Vec3 one;
+        static const Vec3 up;
+        static const Vec3 right;
+        static const Vec3 forward;
+        static const Vec3 down;
+        static const Vec3 left;
+        static const Vec3 backward;
+
         void Invert();
         [[nodiscard]] real Magnitude() const;
         [[nodiscard]] real SquareMagnitude() const;
-        void Normalize();
+        Vec3& Normalize();
         void Clear();
 
         void operator*=(real scalar);

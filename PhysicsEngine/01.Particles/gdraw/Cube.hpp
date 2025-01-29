@@ -7,7 +7,7 @@
 
 #include "CubeMaterial.hpp"
 #include "CubeMesh.hpp"
-#include "Mat4.h"
+#include "Mat4.hpp"
 
 using gmath::Mat4;
 

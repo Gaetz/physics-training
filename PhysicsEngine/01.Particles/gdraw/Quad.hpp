@@ -7,7 +7,7 @@
 
 #include "QuadMaterial.hpp"
 #include "QuadMesh.hpp"
-#include "Mat4.h"
+#include "Mat4.hpp"
 
 using gmath::Mat4;
 

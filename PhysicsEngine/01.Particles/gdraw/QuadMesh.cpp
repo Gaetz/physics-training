@@ -7,7 +7,7 @@
 #include <GpuUploader.hpp>
 #include <Renderer.hpp>
 #include <VertexTypes.hpp>
-#include <Mat4.h>
+#include <Mat4.hpp>
 
 namespace gdraw
 {
