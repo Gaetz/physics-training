@@ -71,6 +71,10 @@ namespace gmath {
         return Vec3(x - v.x, y - v.y, z - v.z);
     }
 
+    Vec3 Vec3::operator/(i32 scalar) const {
+        return Vec3(x / scalar, y / scalar, z / scalar);
+    }
+
     void Vec3::AddScaledVector(const Vec3& v, const real scale) {
         x += v.x * scale;
         y += v.y * scale;

@@ -41,6 +41,7 @@ namespace gmath {
         Vec3 operator+(const Vec3& v) const;
         void operator-=(const Vec3& v);
         Vec3 operator-(const Vec3& v) const;
+        Vec3 operator/(i32 scalar) const;
         void AddScaledVector(const Vec3& v, real scale);
 
         /** Makes an orthonormal basis from vector, that won't change direction.
