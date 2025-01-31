@@ -213,9 +213,6 @@ namespace gdraw
         const i32 vertexCount { cornerVertices + edgeVertices + faceVertices };
         i32 quadsCount = (gridSize * gridSize + gridSize * gridSize + gridSize * gridSize) * 2;
 
-        vector<Vec3> vertices;
-        vector<Vec3> normals;
-        vector<i32> indices;
         vertices.reserve(vertexCount);
         vertices.resize(vertexCount);
         normals.reserve(vertexCount);

@@ -31,6 +31,9 @@ namespace gdraw
 
     private:
         Renderer* renderer{nullptr};
+        vector<Vec3> vertices;
+        vector<Vec3> normals;
+        vector<i32> indices;
         SDL_GPUBuffer* vertexBuffer{ nullptr };
         SDL_GPUBuffer* indexBuffer{ nullptr };
 

@@ -28,6 +28,10 @@ endif()
 # SDL Shadercross
 
 ## Installing SDL_shadercross, for windows:
+#
+# A zipfile with the SDL_shadercross executable and the SDL3.dll file can be found the course shared folder.
+# It has been compiled for windows x64. If you wish to compile it yourself, follow the instructions below.
+#
 ## ----------------------------------------
 ## Thanks to TrojanFoe, who provided a partial tutorial: https://discourse.libsdl.org/t/instructions-on-building-sdl-shadercross-on-macos-and-windows/56906
 ## ----------------------------------------
@@ -55,6 +59,10 @@ endif()
 #   > git submodule update --remote
 #   > cmake -S. -Bbuild -GNinja -DCMAKE_BUILD_TYPE=Release -DSDLSHADERCROSS_VENDORED=ON -DSDL3_DIR=../SDL/build
 #   > cmake --build build
+#
+# 5. Copy the SDL_shadercross executable to a folder in your PATH, with the SDL3.dll file in the same folder.
+#
+# 6. You can now run the compile bat/sh file from Content/Shaders/ to compile the shaders.
 
 #find_package(SDLSHADERCROSS QUIET)
 #if (NOT SDLSHADERCROSS_FOUND)
