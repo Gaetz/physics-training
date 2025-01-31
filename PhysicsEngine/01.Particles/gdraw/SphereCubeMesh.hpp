@@ -23,7 +23,7 @@ namespace gdraw
     {
     public:
         explicit SphereCubeMesh(Renderer* renderer_);
-        void Load() const;
+        void Load();
         void Bind();
         void Draw();
         void Unload();
@@ -34,6 +34,8 @@ namespace gdraw
         vector<Vec3> vertices;
         vector<Vec3> normals;
         vector<i32> indices;
+        u32 vertexCount;
+        u32 quadCount;
         SDL_GPUBuffer* vertexBuffer{ nullptr };
         SDL_GPUBuffer* indexBuffer{ nullptr };
 

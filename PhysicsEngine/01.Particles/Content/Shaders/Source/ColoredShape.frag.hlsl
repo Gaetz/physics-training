@@ -1,8 +1,7 @@
 struct Input
 {
-    float4 Color : TEXCOORD0;
     float4 Position : SV_Position;
-    float3 Normal : TEXCOORD1;
+    float3 Normal : TEXCOORD0;
 };
 
 float3 GetColorFromPositionAndNormal( in float3 worldPosition, in float3 normal ) {

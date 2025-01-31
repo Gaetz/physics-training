@@ -30,51 +30,22 @@ namespace gdraw
         indexBuffer = renderer->CreateBuffer(indexBufferCreateInfo);
     }
 
-    void SphereCubeMesh::Load() const {
+    void SphereCubeMesh::Load() {
+        Build();
         GPUUploader uploader{renderer->device};
-        uploader.PrepareTransferBuffer((sizeof(PositionTextureVertex) * 8) + (sizeof(u16) * 36));
+        i32 indexCount = quadCount * 6;
+        uploader.PrepareTransferBuffer((sizeof(PositionNormalVertex) * vertexCount) + (sizeof(u16) * indexCount));
 
         // Map the transfer buffer and fill it with data (data is bound to the transfer buffer)
-        auto transferData = static_cast<PositionTextureVertex*>(uploader.MapTransferBuffer(false));
+        auto transferData = static_cast<PositionNormalVertex*>(uploader.MapTransferBuffer(false));
 
-        transferData[0] = PositionTextureVertex{ -0.5f, -0.5f,  0.5f, 0, 0 };
-        transferData[1] = PositionTextureVertex{ 0.5f, -0.5f,  0.5f, 1, 0 };
-        transferData[2] = PositionTextureVertex{ 0.5f,  0.5f,  0.5f, 1, 1 };
-        transferData[3] = PositionTextureVertex{ -0.5f,  0.5f,  0.5f, 0, 1 };
-
-        transferData[4] = PositionTextureVertex{ -0.5f, -0.5f, -0.5f, 0, 0 };
-        transferData[5] = PositionTextureVertex{ 0.5f, -0.5f, -0.5f, 1, 0 };
-        transferData[6] = PositionTextureVertex{ 0.5f,  0.5f, -0.5f, 1, 1 };
-        transferData[7] = PositionTextureVertex{ -0.5f,  0.5f, -0.5f, 0, 1 };
-
-        auto indexData = reinterpret_cast<u16*>(&transferData[8]);
-        u16 indices[] = {
-                // Front
-                0, 1, 2,
-                0, 2, 3,
-
-                // Back
-                4, 6, 5,
-                4, 7, 6,
-
-                // Left
-                4, 0, 3,
-                4, 3, 7,
-
-                // Right
-                1, 5, 6,
-                1, 6, 2,
-
-                // Bottom
-                4, 5, 1,
-                4, 1, 0,
-
-                // Top
-                3, 2, 6,
-                3, 6, 7
-        };
-        std::memcpy(indexData, indices, sizeof(indices));
-
+        for (i32 i = 0; i < vertexCount; ++i) {
+            transferData[i] = PositionNormalVertex{ vertices[i].x, vertices[i].y, vertices[i].z, normals[i].x, normals[i].y, normals[i].z };
+        }
+        auto indexData = reinterpret_cast<u16*>(&transferData[vertexCount]);
+        for (i32 i = 0; i < indexCount; ++i) {
+            indexData[i] = indices[i];
+        }
         uploader.UnmapTransferBuffer();
 
         // Upload the transfer data to the vertex and index buffer
@@ -87,18 +58,18 @@ namespace gdraw
         {
             .buffer = vertexBuffer,
             .offset = 0,
-            .size = sizeof(PositionTextureVertex) * 8
+            .size = static_cast<u32>(sizeof(PositionNormalVertex)) * vertexCount
         };
         SDL_GPUTransferBufferLocation transferIndexBufferLocation
         {
             .transfer_buffer = uploader.GetTransferBuffer(),
-            .offset = sizeof(PositionTextureVertex) * 8
+            .offset = static_cast<u32>(sizeof(PositionNormalVertex)) * vertexCount
         };
         SDL_GPUBufferRegion indexBufferRegion
         {
             .buffer = indexBuffer,
             .offset = 0,
-            .size = sizeof(u16) * 36
+            .size = static_cast<u32>(sizeof(u16)) * indexCount
         };
         uploader.Begin();
         uploader.UploadToBuffer(transferVertexBufferLocation, vertexBufferRegion, false);
@@ -115,7 +86,7 @@ namespace gdraw
     }
 
     void SphereCubeMesh::Draw() {
-        renderer->DrawIndexedPrimitives(36, 1, 0, 0, 0);
+        renderer->DrawIndexedPrimitives(quadCount * 6, 1, 0, 0, 0);
     }
 
     void SphereCubeMesh::Unload() {
@@ -210,15 +181,15 @@ namespace gdraw
         i32 cornerVertices { 8 };
         i32 edgeVertices { (gridSize + gridSize + gridSize - 3) * 4 };
         i32 faceVertices { ((gridSize - 1) * (gridSize - 1) + (gridSize - 1) * (gridSize - 1) + (gridSize - 1) * (gridSize - 1)) * 2 };
-        const i32 vertexCount { cornerVertices + edgeVertices + faceVertices };
-        i32 quadsCount = (gridSize * gridSize + gridSize * gridSize + gridSize * gridSize) * 2;
+        vertexCount = cornerVertices + edgeVertices + faceVertices;
+        quadCount = (gridSize * gridSize + gridSize * gridSize + gridSize * gridSize) * 2;
 
         vertices.reserve(vertexCount);
         vertices.resize(vertexCount);
         normals.reserve(vertexCount);
         normals.resize(vertexCount);
-        indices.reserve(quadsCount * 6);
-        indices.resize(quadsCount * 6);
+        indices.reserve(quadCount * 6);
+        indices.resize(quadCount * 6);
 
         // Generate vertices
         i32 v { 0 };
