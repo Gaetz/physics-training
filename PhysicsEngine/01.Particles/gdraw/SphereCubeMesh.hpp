@@ -6,6 +6,7 @@
 #define GDRAW_SPHERECUBEMESH_HPP
 #include <SDL3/SDL_gpu.h>
 #include "Defines.hpp"
+#include <Vec3.hpp>
 
 namespace gmath {
     class Mat4;
@@ -39,11 +40,11 @@ namespace gdraw
         SDL_GPUBuffer* vertexBuffer{ nullptr };
         SDL_GPUBuffer* indexBuffer{ nullptr };
 
-        i32 gridSize { 1 };
+        i32 gridSize { 10 };
         f32 radius { 1.0f };
 
         void Build();
-        void Rebuild();
+        //void Rebuild();
 
         i32 SetQuadIndices(vector<i32>& indices, i32 i, i32 v00, i32 v10, i32 v01, i32 v11);
 

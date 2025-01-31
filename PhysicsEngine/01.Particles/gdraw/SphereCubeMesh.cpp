@@ -13,11 +13,12 @@
 namespace gdraw
 {
     SphereCubeMesh::SphereCubeMesh(Renderer* renderer_) : renderer{renderer_} {
+        Build();
         // Create the vertex buffer
         SDL_GPUBufferCreateInfo vertexBufferCreateInfo =
         {
             .usage = SDL_GPU_BUFFERUSAGE_VERTEX,
-            .size = sizeof(PositionTextureVertex) * 8
+            .size = static_cast<u32>(sizeof(PositionNormalVertex)) * vertexCount
         };
         vertexBuffer = renderer->CreateBuffer(vertexBufferCreateInfo);
 
@@ -25,13 +26,12 @@ namespace gdraw
         SDL_GPUBufferCreateInfo indexBufferCreateInfo =
         {
             .usage = SDL_GPU_BUFFERUSAGE_INDEX,
-            .size = sizeof(Uint16) * 36
+            .size = static_cast<u32>(sizeof(Uint16)) * quadCount * 6
         };
         indexBuffer = renderer->CreateBuffer(indexBufferCreateInfo);
     }
 
     void SphereCubeMesh::Load() {
-        Build();
         GPUUploader uploader{renderer->device};
         i32 indexCount = quadCount * 6;
         uploader.PrepareTransferBuffer((sizeof(PositionNormalVertex) * vertexCount) + (sizeof(u16) * indexCount));
@@ -94,7 +94,11 @@ namespace gdraw
     }
 
     void SphereCubeMesh::SetTransform(const Mat4& transform) {
-        renderer->PushVertexUniformData(0, &transform, sizeof(transform));
+        UboData uboData{};
+        memcpy(uboData.model, transform.ToArray(), sizeof(uboData.model));
+        memcpy(uboData.view, Mat4::Identity.ToArray(), sizeof(uboData.view));
+        memcpy(uboData.projection, Mat4::Identity.ToArray(), sizeof(uboData.projection));
+        renderer->PushVertexUniformData(0, &uboData, sizeof(UboData));
     }
 
     void SphereCubeMesh::Clear() {

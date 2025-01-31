@@ -22,5 +22,12 @@ typedef struct FragMultiplyUniform
     float r, g, b, a;
 } fragMultiplyUniform;
 
+struct UboData
+{
+    float model[16];
+    float view[16];
+    float projection[16];
+};
+
 
 #endif //GDRAW_VERTEXTYPES_HPP

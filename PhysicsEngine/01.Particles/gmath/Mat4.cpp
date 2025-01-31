@@ -221,4 +221,8 @@ namespace gmath
 		m12 = 0.0f;
 		m15 = 0.0f;
 	}
+
+    const f32* Mat4::ToArray() const {
+        return reinterpret_cast<const f32*>(this);
+    }
 }

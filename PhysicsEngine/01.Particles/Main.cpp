@@ -10,6 +10,7 @@
 #include "Scene01Clear.hpp"
 #include "Scene02Quad.hpp"
 #include "Scene03Cube.hpp"
+#include "Scene04Sphere.hpp"
 
 using namespace std;
 
@@ -23,7 +24,7 @@ int main(int argc, char **argv) {
     window.Init();
     renderer.Init(window);
 
-    auto scene = std::make_unique<Scene02Quad>();
+    auto scene = std::make_unique<Scene04Sphere>();
     scene->Load(renderer);
 
     bool isRunning { true };

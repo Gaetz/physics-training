@@ -1,15 +1,15 @@
 //
-// Created by Gaëtan Blaise-Cazalet on 29/01/2024.
+// Created by Gaëtan Blaise-Cazalet on 31/01/2024.
 //
 
-#ifndef SCENE03CUBE_HPP
-#define SCENE03CUBE_HPP
+#ifndef SCENE04SPHERE_HPP
+#define SCENE04SPHERE_HPP
 
-#include <Cube.hpp>
+#include <SphereCube.hpp>
 
 #include "Scene.hpp"
 
-using gdraw::Cube;
+using gdraw::SphereCube;
 
 class Scene04Sphere : public Scene {
 public:
@@ -19,10 +19,10 @@ public:
     void Unload(Renderer& renderer) override;
 
 private:
-    uptr<Cube> cube;
+    uptr<SphereCube> sphere;
     InputState inputState;
 };
 
 
 
-#endif //SCENE03CUBE_HPP
+#endif //SCENE04SPHERE_HPP
