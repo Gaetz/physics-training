@@ -6,6 +6,7 @@
 #define GMATH_QUATERNION_HPP
 
 #include "Vec3.hpp"
+#include "Core.hpp"
 
 namespace gmath {
 
@@ -29,7 +30,7 @@ namespace gmath {
         // Construct the quaternion from an axis and angle
         // It is assumed that axis is already Normalized,
         // and the angle is in radians
-        explicit Quaternion(const Vec3& axis, real angle) {
+        explicit Quaternion(const Vec3 &axis, real angle) {
             real scalar = RealSin(angle / 2.0f);
             x = axis.x * scalar;
             y = axis.y * scalar;
@@ -56,7 +57,7 @@ namespace gmath {
         }
 
         real Length() const {
-            return sqrt(LengthSq());
+            return RealSqrt(LengthSq());
         }
 
         void Normalize() {
@@ -68,30 +69,30 @@ namespace gmath {
         }
 
         // Normalize the provided quaternion
-        static Quaternion Normalize(const Quaternion& q) {
+        static Quaternion Normalize(const Quaternion &q) {
             Quaternion retVal = q;
             retVal.Normalize();
             return retVal;
         }
 
         // Linear interpolation
-        static Quaternion Lerp(const Quaternion& a, const Quaternion& b, real f) {
+        static Quaternion Lerp(const Quaternion &a, const Quaternion &b, real f) {
             Quaternion retVal;
-            retVal.x = Lerp(a.x, b.x, f);
-            retVal.y = Lerp(a.y, b.y, f);
-            retVal.z = Lerp(a.z, b.z, f);
-            retVal.w = Lerp(a.w, b.w, f);
+            retVal.x = gmath::Lerp(a.x, b.x, f);
+            retVal.y = gmath::Lerp(a.y, b.y, f);
+            retVal.z = gmath::Lerp(a.z, b.z, f);
+            retVal.w = gmath::Lerp(a.w, b.w, f);
             retVal.Normalize();
             return retVal;
         }
 
-        static real dot(const Quaternion& a, const Quaternion& b) {
+        static real Dot(const Quaternion &a, const Quaternion &b) {
             return a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w;
         }
 
         // Spherical Linear Interpolation
-        static Quaternion Slerp(const Quaternion& a, const Quaternion& b, real f) {
-            real rawCosm = Quaternion::dot(a, b);
+        static Quaternion Slerp(const Quaternion &a, const Quaternion &b, real f) {
+            real rawCosm = Quaternion::Dot(a, b);
 
             real cosom = -rawCosm;
             if (rawCosm >= 0.0f) {
@@ -127,21 +128,21 @@ namespace gmath {
 
         // Concatenate
         // Rotate by q FOLLOWED BY p
-        static Quaternion concatenate(const Quaternion& q, const Quaternion& p) {
+        static Quaternion Concatenate(const Quaternion &q, const Quaternion &p) {
             Quaternion retVal;
 
             // Vector component is:
             // ps * qv + qs * pv + pv x qv
             Vec3 qv(q.x, q.y, q.z);
             Vec3 pv(p.x, p.y, p.z);
-            Vec3 newVec = p.w * qv + q.w * pv + Vec3::Cross(pv, qv);
+            Vec3 newVec = p.w * qv + q.w * pv + pv.Cross(qv);
             retVal.x = newVec.x;
             retVal.y = newVec.y;
             retVal.z = newVec.z;
 
             // Scalar component is:
             // ps * qs - pv . qv
-            retVal.w = p.w * q.w - Vec3::Dot(pv, qv);
+            retVal.w = p.w * q.w - pv.Dot(qv);
 
             return retVal;
         }
