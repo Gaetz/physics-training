@@ -95,9 +95,9 @@ namespace gdraw
 
     void SphereCubeMesh::SetTransform(const Mat4& transform, const Mat4& view, const Mat4& projection) {
         UboData uboData{};
-        memcpy(uboData.model, transform.ToArray(), sizeof(uboData.model));
-        memcpy(uboData.view, view.ToArray(), sizeof(uboData.view));
-        memcpy(uboData.projection, projection.ToArray(), sizeof(uboData.projection));
+        memcpy(uboData.model, transform.ToArrayConst(), sizeof(uboData.model));
+        memcpy(uboData.view, view.ToArrayConst(), sizeof(uboData.view));
+        memcpy(uboData.projection, projection.ToArrayConst(), sizeof(uboData.projection));
         renderer->PushVertexUniformData(0, &uboData, sizeof(UboData));
     }
 

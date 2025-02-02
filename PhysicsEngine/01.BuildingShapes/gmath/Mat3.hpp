@@ -30,8 +30,8 @@ namespace gmath {
         [[nodiscard]] const f32 *ToArrayConst() const;
         [[nodiscard]] f32 *ToArray();
 
-        Vec3 GetRow(i32 i) const;
-        void SetRow(i32 i, const Vec3& newRow)
+        f32& operator()(int x, int y);
+        f32 operator()(int x, int y) const;
 
         void Zero();
 
@@ -45,7 +45,7 @@ namespace gmath {
 
         Mat3 Inverse() const;
 
-        Mat2 Minor(const int i, const int j) const;
+        Mat2 Minor(int i, int j) const;
 
         float Cofactor(const int i, const int j) const;
 

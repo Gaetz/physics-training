@@ -19,14 +19,6 @@ namespace gmath {
         m3 = m3_;
     }
 
-    Mat2 & Mat2::operator = ( const Mat2 & rhs ) {
-        m0 = rhs.m0;
-        m1 = rhs.m1;
-        m2 = rhs.m2;
-        m3 = rhs.m3;
-        return *this;
-    }
-
     const Mat2 & Mat2::operator *= ( const float rhs ) {
         m0 *= rhs;
         m1 *= rhs;
@@ -41,5 +33,20 @@ namespace gmath {
         m2 += rhs.m2;
         m3 += rhs.m3;
         return *this;
+    }
+
+    f32 &Mat2::operator()(int x, int y) {
+        switch (y * 2 + x) {
+            case 0:
+                return m0;
+            case 1:
+                return m1;
+            case 2:
+                return m2;
+            case 3:
+                return m3;
+            default:
+                return m0;
+        }
     }
 } // gmath

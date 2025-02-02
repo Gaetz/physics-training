@@ -1,4 +1,5 @@
 #include "Mat4.hpp"
+#include "Mat3.hpp"
 #include <cstdlib>
 
 #include <Vec3.hpp>
@@ -233,34 +234,16 @@ namespace gmath {
         return result;
     }
 
-    Mat4::Mat4() {
-        m0 = 0.0f;
-        m1 = 0.0f;
-        m2 = 0.0f;
-        m3 = 0.0f;
-
-        m4 = 0.0f;
-        m5 = 0.0f;
-        m6 = 0.0f;
-        m7 = 0.0f;
-
-        m8 = 0.0f;
-        m9 = 0.0f;
-        m10 = 0.0f;
-        m0 = 0.0f;
-
-        m4 = 0.0f;
-        m8 = 0.0f;
-        m12 = 0.0f;
-        m15 = 0.0f;
-    }
-
-    const f32 *Mat4::ToArray() const {
+    const f32 *Mat4::ToArrayConst() const {
         return reinterpret_cast<const f32 *>(this);
     }
 
+    f32 *Mat4::ToArray()  {
+        return reinterpret_cast<f32 *>(this);
+    }
+
     Mat4 Mat4::CreateLookAt(const Vec3 &eye, const Vec3 &target, const Vec3 &up) {
-        Vec3 zAxis = (target - eye).Normalize();
+        Vec3 zAxis = (eye - target).Normalize();
         Vec3 xAxis = up.Cross(zAxis).Normalize();
         Vec3 yAxis = zAxis.Cross(xAxis);
 
@@ -304,16 +287,16 @@ namespace gmath {
         const float yy = m5 * m5;
         const float zz = m10 * m10;
         const float ww = m15 * m15;
-        return ( xx + yy + zz + ww );
+        return xx + yy + zz + ww;
     }
 
     inline float Mat4::Determinant() const {
         float det = 0.0f;
         float sign = 1.0f;
-        for ( int j = 0; j < 4; j++ ) {
-            Mat3 minor = Minor( 0, j );
+        for (int j = 0; j < 4; j++) {
+            Mat3 minor = Minor(0, j);
 
-            det += rows[ 0 ][ j ] * minor.Determinant() * sign;
+            det += (*this)(0, j) * minor.Determinant() * sign;
             sign = sign * -1.0f;
         }
         return det;
@@ -321,9 +304,9 @@ namespace gmath {
 
     inline Mat4 Mat4::Transpose() const {
         Mat4 transpose;
-        for ( int i = 0; i < 4; i++ ) {
-            for ( int j = 0; j < 4; j++ ) {
-                transpose.rows[ i ][ j ] = rows[ j ][ i ];
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                transpose(i, j) = (*this)(j, i);
             }
         }
         return transpose;
@@ -331,9 +314,9 @@ namespace gmath {
 
     inline Mat4 Mat4::Inverse() const {
         Mat4 inv;
-        for ( int i = 0; i < 4; i++ ) {
-            for ( int j = 0; j < 4; j++ ) {
-                inv.rows[ j ][ i ] = Cofactor( i, j );	// Perform the transpose while calculating the cofactors
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                inv(j, i) = Cofactor(i, j);    // Perform the transpose while calculating the cofactors
             }
         }
         float det = Determinant();
@@ -342,22 +325,22 @@ namespace gmath {
         return inv;
     }
 
-    inline Mat3 Mat4::Minor( const int i, const int j ) const {
+    Mat3 Mat4::Minor(const int i, const int j) const {
         Mat3 minor;
 
         int yy = 0;
-        for ( int y = 0; y < 4; y++ ) {
-            if ( y == j ) {
+        for (int y = 0; y < 4; y++) {
+            if (y == j) {
                 continue;
             }
 
             int xx = 0;
-            for ( int x = 0; x < 4; x++ ) {
-                if ( x == i ) {
+            for (int x = 0; x < 4; x++) {
+                if (x == i) {
                     continue;
                 }
 
-                minor.rows[ xx ][ yy ] = rows[ x ][ y ];
+                minor(xx, yy) = (*this)(x, y);
                 xx++;
             }
 
@@ -366,22 +349,154 @@ namespace gmath {
         return minor;
     }
 
-    inline float Mat4::Cofactor( const int i, const int j ) const {
-        const Mat3 minor = Minor( i, j );
-        const float C = float( pow( -1, i + 1 + j + 1 ) ) * minor.Determinant();
+    inline float Mat4::Cofactor(const int i, const int j) const {
+        const Mat3 minor = Minor(i, j);
+        const float C = float(pow(-1, i + 1 + j + 1)) * minor.Determinant();
         return C;
     }
 
-    inline void Mat4::Orient( Vec3 pos, Vec3 fwd, Vec3 up ) {
-        Vec3 left = up.Cross( fwd );
+    inline void Mat4::Orient(Vec3 pos, Vec3 fwd, Vec3 up) {
+        Vec3 zAxis = fwd.Normalize();
+        Vec3 xAxis = up.Cross(zAxis).Normalize();
+        Vec3 yAxis = zAxis.Cross(xAxis);
 
-        // For our coordinate system where:
-        // +x-axis = fwd
-        // +y-axis = left
-        // +z-axis = up
-        rows[ 0 ] = Vec4( fwd.x, left.x, up.x, pos.x );
-        rows[ 1 ] = Vec4( fwd.y, left.y, up.y, pos.y );
-        rows[ 2 ] = Vec4( fwd.z, left.z, up.z, pos.z );
-        rows[ 3 ] = Vec4( 0, 0, 0, 1 );
+        m0 = xAxis.x;
+        m1 = xAxis.y;
+        m2 = xAxis.z;
+        m3 = 0;
+
+        m4 = yAxis.x;
+        m5 = yAxis.y;
+        m6 = yAxis.z;
+        m7 = 0;
+
+        m8 = zAxis.x;
+        m9 = zAxis.y;
+        m10 = zAxis.z;
+        m11 = 0;
+
+        m12 = pos.x;
+        m13 = pos.y;
+        m14 = pos.z;
+        m15 = 1;
+    }
+
+    f32 Mat4::operator()(int x, int y) const {
+        switch (y * 3 + x) {
+            case 0:
+                return m0;
+            case 1:
+                return m1;
+            case 2:
+                return m2;
+            case 3:
+                return m3;
+            case 4:
+                return m4;
+            case 5:
+                return m5;
+            case 6:
+                return m6;
+            case 7:
+                return m7;
+            case 8:
+                return m8;
+            case 9:
+                return m9;
+            case 10:
+                return m10;
+            case 11:
+                return m11;
+            case 12:
+                return m12;
+            case 13:
+                return m13;
+            case 14:
+                return m14;
+            case 15:
+                return m15;
+            default:
+                return m0;
+        }
+    }
+
+    f32 &Mat4::operator()(int x, int y) {
+        switch (y * 3 + x) {
+            case 0:
+                return m0;
+            case 1:
+                return m1;
+            case 2:
+                return m2;
+            case 3:
+                return m3;
+            case 4:
+                return m4;
+            case 5:
+                return m5;
+            case 6:
+                return m6;
+            case 7:
+                return m7;
+            case 8:
+                return m8;
+            case 9:
+                return m9;
+            case 10:
+                return m10;
+            case 11:
+                return m11;
+            case 12:
+                return m12;
+            case 13:
+                return m13;
+            case 14:
+                return m14;
+            case 15:
+                return m15;
+            default:
+                return m0;
+        }
+    }
+
+    Mat4 &Mat4::operator*=(const f32 rhs) {
+        m0 *= rhs;
+        m1 *= rhs;
+        m2 *= rhs;
+        m3 *= rhs;
+        m4 *= rhs;
+        m5 *= rhs;
+        m6 *= rhs;
+        m7 *= rhs;
+        m8 *= rhs;
+        m9 *= rhs;
+        m10 *= rhs;
+        m11 *= rhs;
+        m12 *= rhs;
+        m13 *= rhs;
+        m14 *= rhs;
+        m15 *= rhs;
+        return *this;
+    }
+
+    Mat4 Mat4::operator*(const float rhs) const {
+        Mat4 tmp;
+        tmp.m0 = m0 * rhs;
+        tmp.m1 = m1 * rhs;
+        tmp.m2 = m2 * rhs;
+        tmp.m3 = m3 * rhs;
+        tmp.m4 = m4 * rhs;
+        tmp.m5 = m5 * rhs;
+        tmp.m6 = m6 * rhs;
+        tmp.m7 = m7 * rhs;
+        tmp.m8 = m8 * rhs;
+        tmp.m9 = m9 * rhs;
+        tmp.m10 = m10 * rhs;
+        tmp.m11 = m11 * rhs;
+        tmp.m12 = m12 * rhs;
+        tmp.m13 = m13 * rhs;
+        tmp.m14 = m14 * rhs;
+        tmp.m15 = m15 * rhs;
+        return tmp;
     }
 }

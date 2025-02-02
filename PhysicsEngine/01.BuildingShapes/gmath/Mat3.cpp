@@ -57,11 +57,6 @@ namespace gmath {
         return reinterpret_cast<f32 *>(this);
     }
 
-    Vec3 Mat3::GetRow(i32 i) const {
-        const f32* start = ToArrayConst() + i * sizeof(f32) * i;
-        return {*(start), *(start+1), *(start+2)};
-    }
-
     const Mat3 &Mat3::operator*=(const f32 rhs) {
         m0 *= rhs;
         m1 *= rhs;
@@ -77,13 +72,13 @@ namespace gmath {
 
     const Mat3 &Mat3::operator+=(const Mat3 &rhs) {
         m0 += rhs.m0;
-        m1 += rhs.m1;
-        m2 += rhs.m2;
         m3 += rhs.m3;
-        m4 += rhs.m4;
-        m5 += rhs.m5;
         m6 += rhs.m6;
+        m1 += rhs.m1;
+        m4 += rhs.m4;
         m7 += rhs.m7;
+        m2 += rhs.m2;
+        m5 += rhs.m5;
         m8 += rhs.m8;
         return *this;
     }
@@ -134,7 +129,7 @@ namespace gmath {
         Mat3 inv;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                inv.rows[j][i] = Cofactor(i, j);    // Perform the transpose while calculating the cofactors
+                inv(j, i) = Cofactor(i, j);    // Perform the transpose while calculating the cofactors
             }
         }
         f32 det = Determinant();
@@ -157,8 +152,8 @@ namespace gmath {
                 if (x == i) {
                     continue;
                 }
-
-                minor.rows[xx][yy] = rows[x][y];
+                f32 data = (*this)(x, y);
+                minor(xx, yy) = data;
                 xx++;
             }
 
@@ -194,27 +189,63 @@ namespace gmath {
     }
 
     Mat3 Mat3::operator*(const Mat3 &rhs) const {
-        Mat3 tmp {};
-        for (int i = 0; i < 3; i++) {
-            tmp.GetRow(i).x = rows[i].x * rhs.rows[0].x + rows[i].y * rhs.rows[1].x + rows[i].z * rhs.rows[2].x;
-            tmp.rows[i].y = rows[i].x * rhs.rows[0].y + rows[i].y * rhs.rows[1].y + rows[i].z * rhs.rows[2].y;
-            tmp.rows[i].z = rows[i].x * rhs.rows[0].z + rows[i].y * rhs.rows[1].z + rows[i].z * rhs.rows[2].z;
-        }
+        Mat3 tmp;
+        tmp.m0 = m0 * rhs.m0 + m3 * rhs.m1 + m6 * rhs.m2;
+        tmp.m3 = m0 * rhs.m3 + m3 * rhs.m4 + m6 * rhs.m5;
+        tmp.m6 = m0 * rhs.m6 + m3 * rhs.m7 + m6 * rhs.m8;
+
+        tmp.m1 = m1 * rhs.m0 + m4 * rhs.m1 + m7 * rhs.m2;
+        tmp.m4 = m1 * rhs.m3 + m4 * rhs.m4 + m7 * rhs.m5;
+        tmp.m7 = m1 * rhs.m6 + m4 * rhs.m7 + m7 * rhs.m8;
+
+        tmp.m2 = m2 * rhs.m0 + m5 * rhs.m1 + m8 * rhs.m2;
+        tmp.m5 = m2 * rhs.m3 + m5 * rhs.m4 + m8 * rhs.m5;
+        tmp.m8 = m2 * rhs.m6 + m5 * rhs.m7 + m8 * rhs.m8;
+
         return tmp;
     }
 
     Mat3 Mat3::operator+(const Mat3 &rhs) const {
         Mat3 tmp;
-        for (int i = 0; i < 3; i++) {
-            tmp.rows[i] = rows[i] + rhs.rows[i];
-        }
+        tmp.m0 = m0 + rhs.m0;
+        tmp.m3 = m3 + rhs.m3;
+        tmp.m6 = m6 + rhs.m6;
+        tmp.m1 = m1 + rhs.m1;
+        tmp.m4 = m4 + rhs.m4;
+        tmp.m7 = m7 + rhs.m7;
+        tmp.m2 = m2 + rhs.m2;
+        tmp.m5 = m5 + rhs.m5;
+        tmp.m8 = m8 + rhs.m8;
         return tmp;
     }
 
-    void Mat3::SetRow(i32 i, const Vec3 &newRow) {
-        f32* start = ToArray() + i * sizeof(f32) * i;
-        *start = newRow.x;
-        *(start+1) = newRow.y;
-        *(start+2) = newRow.z;
+    f32& Mat3::operator()(int x, int y) {
+        switch (y * 3 + x) {
+            case 0: return m0;
+            case 1: return m1;
+            case 2: return m2;
+            case 3: return m3;
+            case 4: return m4;
+            case 5: return m5;
+            case 6: return m6;
+            case 7: return m7;
+            case 8: return m8;
+            default: return m0;
+        }
+    }
+
+    f32 Mat3::operator()(int x, int y) const {
+        switch (y * 3 + x) {
+            case 0: return m0;
+            case 1: return m1;
+            case 2: return m2;
+            case 3: return m3;
+            case 4: return m4;
+            case 5: return m5;
+            case 6: return m6;
+            case 7: return m7;
+            case 8: return m8;
+            default: return m0;
+        }
     }
 }

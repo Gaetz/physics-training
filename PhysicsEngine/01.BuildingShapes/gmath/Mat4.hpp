@@ -8,11 +8,12 @@
 
 namespace gmath {
     class Vec3;
+    class Mat3;
     class Quat;
 
     class Mat4 {
     public:
-        Mat4();
+        Mat4() = default;
 
         Mat4(f32 m0_, f32 m4_, f32 m8_, f32 m12_,
              f32 m1_, f32 m5_, f32 m9_, f32 m13_,
@@ -24,13 +25,19 @@ namespace gmath {
                 m2{m2_}, m6{m6_}, m10{m10_}, m14{m14_},
                 m3{m3_}, m7{m7_}, m11{m11_}, m15{m15_} {}
 
-        f32 m0, m4, m8, m12; // Matrix first row (4 components)
-        f32 m1, m5, m9, m13; // Matrix second row (4 components)
-        f32 m2, m6, m10, m14; // Matrix third row (4 components)
-        f32 m3, m7, m11, m15; // Matrix fourth row (4 components)
+        f32 m0 {0}, m4 {0}, m8 {0}, m12 {0}; // Matrix first row (4 components)
+        f32 m1 {0}, m5 {0}, m9 {0}, m13 {0}; // Matrix second row (4 components)
+        f32 m2 {0}, m6 {0}, m10 {0}, m14 {0}; // Matrix third row (4 components)
+        f32 m3 {0}, m7 {0}, m11 {0}, m15 {0}; // Matrix fourth row (4 components)
 
         static const Mat4 identity;
         static const Mat4 zero;
+
+        f32& operator()(int x, int y);
+        f32 operator()(int x, int y) const;
+        Mat4& operator*=(f32 rhs);
+        Mat4 operator * ( float rhs ) const;
+        Mat4 operator * ( const Mat4 & rhs ) const;
 
         static Mat4 CreateRotationZ(f32 angle);
 
@@ -51,9 +58,8 @@ namespace gmath {
 
         [[nodiscard]] Vec3 GetScale() const;
 
-        [[nodiscard]] const f32 *ToArray() const;
-
-        Mat4 operator*(const Mat4 &other) const;
+        [[nodiscard]] const f32 *ToArrayConst() const;
+        [[nodiscard]] f32 *ToArray();
 
         static Mat4 CreateLookAt(const Vec3 &eye, const Vec3 &target, const Vec3 &up);
 
@@ -63,12 +69,12 @@ namespace gmath {
         static Mat4
         CreatePerspectiveFieldOfView(f32 fieldOfView, f32 aspectRatio, f32 nearPlaneDistance, f32 farPlaneDistance);
 
-        float Trace() const;
-        float Determinant() const;
+        f32 Trace() const;
+        f32 Determinant() const;
         Mat4 Transpose() const;
         Mat4 Inverse() const;
-        //Mat3 Minor( const int i, const int j ) const;
-        float Cofactor( const int i, const int j ) const;
+        Mat3 Minor( i32 i, i32 j ) const;
+        f32 Cofactor( i32 i, i32 j ) const;
         void Orient( Vec3 pos, Vec3 fwd, Vec3 up );
     };
 }
