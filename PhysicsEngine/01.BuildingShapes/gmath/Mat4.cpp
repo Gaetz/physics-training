@@ -2,7 +2,7 @@
 #include <cstdlib>
 
 #include <Vec3.hpp>
-#include <Quaternion.hpp>
+#include <Quat.hpp>
 
 namespace gmath {
     const Mat4 Mat4::Identity
@@ -264,7 +264,7 @@ namespace gmath {
         };
     }
 
-    Mat4 Mat4::CreateFromQuaternion(const Quaternion &q) {
+    Mat4 Mat4::CreateFromQuaternion(const Quat &q) {
         Mat4 mat;
 
         mat.m0 = 1.0f - 2.0f * q.y * q.y - 2.0f * q.z * q.z;

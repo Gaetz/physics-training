@@ -8,7 +8,7 @@
 
 namespace gmath {
     class Vec3;
-    class Quaternion;
+    class Quat;
 
     class Mat4 {
     public:
@@ -45,7 +45,7 @@ namespace gmath {
 
         static Mat4 CreateScale(float scale);
 
-        static Mat4 CreateFromQuaternion(const class Quaternion &q);
+        static Mat4 CreateFromQuaternion(const class Quat &q);
 
 
         [[nodiscard]] Vec3 GetScale() const;
