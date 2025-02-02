@@ -10,16 +10,14 @@
 namespace gmath {
     class Vec3 {
     public:
-        real x;
-        real y;
-        real z;
-    private:
-        real pad;
+        real x { 0 };
+        real y { 0 };
+        real z { 0 };
+        real w { 1 };
 
     public:
-        Vec3() : x(0), y(0), z(0), pad(0) {}
-
-        Vec3(real x, real y, real z) : x(x), y(y), z(z), pad(0) {}
+        Vec3() = default;
+        Vec3(real x, real y, real z) : x(x), y(y), z(z), w(1) {}
 
         static const Vec3 zero;
         static const Vec3 one;

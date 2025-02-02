@@ -48,7 +48,7 @@ namespace gmath {
     }
 
     Vec3 Vec3::operator*(const real scalar) const {
-        return Vec3(x * scalar, y * scalar, z * scalar);
+        return {x * scalar, y * scalar, z * scalar};
     }
 
     void Vec3::operator+=(const Vec3& v) {
@@ -58,7 +58,7 @@ namespace gmath {
     }
 
     Vec3 Vec3::operator+(const Vec3& v) const {
-        return Vec3(x + v.x, y + v.y, z + v.z);
+        return {x + v.x, y + v.y, z + v.z};
     }
 
     void Vec3::operator-=(const Vec3& v) {
@@ -68,11 +68,11 @@ namespace gmath {
     }
 
     Vec3 Vec3::operator-(const Vec3& v) const {
-        return Vec3(x - v.x, y - v.y, z - v.z);
+        return {x - v.x, y - v.y, z - v.z};
     }
 
     Vec3 Vec3::operator/(i32 scalar) const {
-        return Vec3(x / scalar, y / scalar, z / scalar);
+        return {x / scalar, y / scalar, z / scalar};
     }
 
     void Vec3::AddScaledVector(const Vec3& v, const real scale) {
@@ -92,7 +92,7 @@ namespace gmath {
     }
 
     Vec3 Vec3::ComponentProduct(const Vec3& v) const {
-        return Vec3(x * v.x, y * v.y, z * v.z);
+        return {x * v.x, y * v.y, z * v.z};
     }
 
     void Vec3::ComponentProductUpdate(const Vec3& v) {

@@ -29,7 +29,8 @@ namespace gmath {
         f32 m2, m6, m10, m14; // Matrix third row (4 components)
         f32 m3, m7, m11, m15; // Matrix fourth row (4 components)
 
-        static const Mat4 Identity;
+        static const Mat4 identity;
+        static const Mat4 zero;
 
         static Mat4 CreateRotationZ(f32 angle);
 
@@ -61,6 +62,14 @@ namespace gmath {
 
         static Mat4
         CreatePerspectiveFieldOfView(f32 fieldOfView, f32 aspectRatio, f32 nearPlaneDistance, f32 farPlaneDistance);
+
+        float Trace() const;
+        float Determinant() const;
+        Mat4 Transpose() const;
+        Mat4 Inverse() const;
+        //Mat3 Minor( const int i, const int j ) const;
+        float Cofactor( const int i, const int j ) const;
+        void Orient( Vec3 pos, Vec3 fwd, Vec3 up );
     };
 }
 

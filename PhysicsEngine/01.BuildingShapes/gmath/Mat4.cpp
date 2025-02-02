@@ -5,12 +5,20 @@
 #include <Quat.hpp>
 
 namespace gmath {
-    const Mat4 Mat4::Identity
+    const Mat4 Mat4::identity
             {
                     1.0f, 0.0f, 0.0f, 0.0f,
                     0.0f, 1.0f, 0.0f, 0.0f,
                     0.0f, 0.0f, 1.0f, 0.0f,
                     0.0f, 0.0f, 0.0f, 1.0f
+            };
+
+    const Mat4 Mat4::zero
+            {
+                    0.0f, 0.0f, 0.0f, 0.0f,
+                    0.0f, 0.0f, 0.0f, 0.0f,
+                    0.0f, 0.0f, 0.0f, 0.0f,
+                    0.0f, 0.0f, 0.0f, 0.0f
             };
 
     Mat4 Mat4::CreateRotationZ(float radians) {
@@ -288,5 +296,92 @@ namespace gmath {
         mat.m15 = 1.0f;
 
         return mat;
+    }
+
+
+    float Mat4::Trace() const {
+        const float xx = m0 * m0;
+        const float yy = m5 * m5;
+        const float zz = m10 * m10;
+        const float ww = m15 * m15;
+        return ( xx + yy + zz + ww );
+    }
+
+    inline float Mat4::Determinant() const {
+        float det = 0.0f;
+        float sign = 1.0f;
+        for ( int j = 0; j < 4; j++ ) {
+            Mat3 minor = Minor( 0, j );
+
+            det += rows[ 0 ][ j ] * minor.Determinant() * sign;
+            sign = sign * -1.0f;
+        }
+        return det;
+    }
+
+    inline Mat4 Mat4::Transpose() const {
+        Mat4 transpose;
+        for ( int i = 0; i < 4; i++ ) {
+            for ( int j = 0; j < 4; j++ ) {
+                transpose.rows[ i ][ j ] = rows[ j ][ i ];
+            }
+        }
+        return transpose;
+    }
+
+    inline Mat4 Mat4::Inverse() const {
+        Mat4 inv;
+        for ( int i = 0; i < 4; i++ ) {
+            for ( int j = 0; j < 4; j++ ) {
+                inv.rows[ j ][ i ] = Cofactor( i, j );	// Perform the transpose while calculating the cofactors
+            }
+        }
+        float det = Determinant();
+        float invDet = 1.0f / det;
+        inv *= invDet;
+        return inv;
+    }
+
+    inline Mat3 Mat4::Minor( const int i, const int j ) const {
+        Mat3 minor;
+
+        int yy = 0;
+        for ( int y = 0; y < 4; y++ ) {
+            if ( y == j ) {
+                continue;
+            }
+
+            int xx = 0;
+            for ( int x = 0; x < 4; x++ ) {
+                if ( x == i ) {
+                    continue;
+                }
+
+                minor.rows[ xx ][ yy ] = rows[ x ][ y ];
+                xx++;
+            }
+
+            yy++;
+        }
+        return minor;
+    }
+
+    inline float Mat4::Cofactor( const int i, const int j ) const {
+        const Mat3 minor = Minor( i, j );
+        const float C = float( pow( -1, i + 1 + j + 1 ) ) * minor.Determinant();
+        return C;
+    }
+
+    inline void Mat4::Orient( Vec3 pos, Vec3 fwd, Vec3 up ) {
+        Vec3 left = up.Cross( fwd );
+
+        // For our coordinate system where:
+        // +x-axis = fwd
+        // +y-axis = left
+        // +z-axis = up
+        rows[ 0 ] = Vec4( fwd.x, left.x, up.x, pos.x );
+        rows[ 1 ] = Vec4( fwd.y, left.y, up.y, pos.y );
+        rows[ 2 ] = Vec4( fwd.z, left.z, up.z, pos.z );
+        rows[ 3 ] = Vec4( 0, 0, 0, 1 );
     }
 }

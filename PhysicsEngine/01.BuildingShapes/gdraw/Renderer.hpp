@@ -106,7 +106,7 @@ namespace gdraw {
         }
 
     private:
-        Mat4 projection { Mat4::Identity };
+        Mat4 projection { Mat4::identity };
         Mat4 view { Mat4::CreateLookAt(Vec3 {0, 0, 10.0f}, Vec3::zero, Vec3::up) };
     };
 }
