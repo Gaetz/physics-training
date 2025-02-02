@@ -46,13 +46,13 @@ namespace gdraw
         void Build();
         //void Rebuild();
 
-        i32 SetQuadIndices(vector<i32>& indices, i32 i, i32 v00, i32 v10, i32 v01, i32 v11);
+        i32 SetQuadIndices(i32 i, i32 v00, i32 v10, i32 v01, i32 v11);
 
-        i32 CreateTopFace(vector<i32>& indices, i32 t, i32 ring);
+        i32 CreateTopFace(i32 t, i32 ring);
 
-        i32 CreateBottomFace(vector<i32>& indices, i32 vertexCount, i32 t, i32 ring);
+        i32 CreateBottomFace(i32 t, i32 ring);
 
-        void SetVertex(vector<Vec3>& vertices, vector<Vec3>& normals, i32 i, i32 x, i32 y, i32 z);
+        void SetVertex(i32 i, i32 x, i32 y, i32 z);
 
         void Clear();
     };
