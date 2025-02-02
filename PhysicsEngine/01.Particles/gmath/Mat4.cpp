@@ -1,5 +1,6 @@
 #include "Mat4.hpp"
 
+#include <Vec3.hpp>
 #include <cstdlib>
 
 namespace gmath
@@ -224,5 +225,18 @@ namespace gmath
 
     const f32* Mat4::ToArray() const {
         return reinterpret_cast<const f32*>(this);
+    }
+
+    Mat4 Mat4::CreateLookAt(const Vec3& eye, const Vec3& target, const Vec3& up) {
+        Vec3 zAxis = (eye - target).Normalize();
+        Vec3 xAxis = up.Cross(zAxis).Normalize();
+        Vec3 yAxis = zAxis.Cross(xAxis);
+
+        return Mat4{
+                xAxis.x, yAxis.x, zAxis.x, 0,
+                xAxis.y, yAxis.y, zAxis.y, 0,
+                xAxis.z, yAxis.z, zAxis.z, 0,
+                -xAxis.Dot(eye), -yAxis.Dot(eye), -zAxis.Dot(eye), 1
+        };
     }
 }

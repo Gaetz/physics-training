@@ -5,6 +5,7 @@
 #include "SphereCube.hpp"
 
 #include <VertexTypes.hpp>
+#include <Renderer.hpp>
 
 namespace gdraw
 {
@@ -24,10 +25,10 @@ namespace gdraw
     void SphereCube::Bind() {
         material.Bind();
         mesh.Bind();
-        mesh.SetTransform(transform);
     }
 
-    void SphereCube::Draw() {
+    void SphereCube::Draw(const Renderer& renderer) {
+        mesh.SetTransform(transform, renderer.GetView(), renderer.GetProjection());
         Bind();
         mesh.Draw();
     }

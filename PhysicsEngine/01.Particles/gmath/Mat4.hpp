@@ -5,8 +5,11 @@
 
 #include <Defines.hpp>
 
+
 namespace gmath {
-class Mat4 
+    class Vec3;
+
+    class Mat4
 {
 public:
 	Mat4();
@@ -35,6 +38,8 @@ public:
     [[nodiscard]] const f32* ToArray() const;
 
 	Mat4 operator*(const Mat4& other) const;
+
+    static Mat4 CreateLookAt(const Vec3& eye, const Vec3& target, const Vec3& up);
 
 	static Mat4 CreateOrthographicOffCenter(f32 left, f32 right, f32 bottom, f32 top, f32 zNearPlane, f32 zFarPlane);
 

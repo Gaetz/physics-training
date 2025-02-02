@@ -6,7 +6,12 @@
 #define RENDERER_HPP
 
 #include <SDL3/SDL_gpu.h>
-#include "Defines.hpp"
+#include <Defines.hpp>
+#include <Mat4.hpp>
+#include <Vec3.hpp>
+
+using gmath::Mat4;
+using gmath::Vec3;
 
 namespace gdraw {
 
@@ -69,15 +74,6 @@ namespace gdraw {
 
         void SetBufferName(SDL_GPUBuffer* buffer, const str& name) const;
 
-        SDL_GPUTransferBuffer* CreateTransferBuffer(const SDL_GPUTransferBufferCreateInfo& createInfo) const;
-
-        void* MapTransferBuffer(SDL_GPUTransferBuffer* transferBuffer, bool cycle) const;
-
-        void UnmapTransferBuffer(SDL_GPUTransferBuffer* transferBuffer) const;
-
-        void ReleaseTransferBuffer(SDL_GPUTransferBuffer* transferBuffer) const;
-
-
         void ReleaseBuffer(SDL_GPUBuffer* buffer) const;
 
         void ReleaseGraphicsPipeline(SDL_GPUGraphicsPipeline* pipeline) const;
@@ -93,7 +89,25 @@ namespace gdraw {
         SDL_GPUTexture* depthTexture { nullptr };
         SDL_GPURenderPass* renderPass { nullptr };
 
-        SDL_GPUCopyPass* copyPass { nullptr };
+        [[nodiscard]] const Mat4& GetView() const {
+            return view;
+        }
+
+        void SetView(const Mat4& view_) {
+            view = view_;
+        }
+
+        [[nodiscard]] const Mat4& GetProjection() const {
+            return projection;
+        }
+
+        void SetProjection(const Mat4& projection_) {
+            projection = projection_;
+        }
+
+    private:
+        Mat4 projection { Mat4::Identity };
+        Mat4 view { Mat4::CreateLookAt(Vec3 {0, 0, 10.0f}, Vec3::zero, Vec3::up) };
     };
 }
 

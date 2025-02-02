@@ -28,7 +28,7 @@ namespace gdraw
         void Bind();
         void Draw();
         void Unload();
-        void SetTransform(const Mat4& transform_);
+        void SetTransform(const Mat4& transform, const Mat4& view, const Mat4& projection);
 
     private:
         Renderer* renderer{nullptr};

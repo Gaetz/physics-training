@@ -31,6 +31,9 @@ namespace gdraw {
                 .num_levels = 1,
         };
         depthTexture = SDL_CreateGPUTexture(device, &depthTextureInfo);
+
+        // Init projection matrix
+        projection = Mat4::CreatePerspectiveFieldOfView(45.0f, static_cast<f32>(window.width) / static_cast<f32>(window.height), 0.1f, 100.0f);
     }
 
     void Renderer::Begin() {
@@ -158,22 +161,6 @@ namespace gdraw {
 
     void Renderer::SetBufferName(SDL_GPUBuffer* buffer, const str& name) const {
         SDL_SetGPUBufferName(device, buffer, name.c_str());
-    }
-
-    SDL_GPUTransferBuffer* Renderer::CreateTransferBuffer(const SDL_GPUTransferBufferCreateInfo& createInfo) const {
-        return SDL_CreateGPUTransferBuffer(device, &createInfo);
-    }
-
-    void* Renderer::MapTransferBuffer(SDL_GPUTransferBuffer* transferBuffer, bool cycle) const {
-        return SDL_MapGPUTransferBuffer(device, transferBuffer, cycle);
-    }
-
-    void Renderer::UnmapTransferBuffer(SDL_GPUTransferBuffer* transferBuffer) const {
-        SDL_UnmapGPUTransferBuffer(device, transferBuffer);
-    }
-
-    void Renderer::ReleaseTransferBuffer(SDL_GPUTransferBuffer* transferBuffer) const {
-        SDL_ReleaseGPUTransferBuffer(device, transferBuffer);
     }
 
     SDL_GPUTexture* Renderer::CreateTexture(const SDL_GPUTextureCreateInfo& createInfo) const {

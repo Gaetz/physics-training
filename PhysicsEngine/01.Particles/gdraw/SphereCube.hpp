@@ -20,7 +20,7 @@ namespace gdraw
 
         void Load();
         void Update(f32 dt);
-        void Draw();
+        void Draw(const Renderer& renderer);
         void Unload();
 
     private:

@@ -14,7 +14,7 @@ bool Scene04Sphere::Update(float dt) {
 void Scene04Sphere::Draw(Renderer& renderer) {
     renderer.Begin();
 
-    sphere->Draw();
+    sphere->Draw(renderer);
 
     renderer.End();
 }
