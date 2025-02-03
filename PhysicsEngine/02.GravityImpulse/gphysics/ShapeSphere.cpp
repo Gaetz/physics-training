@@ -3,3 +3,8 @@
 //
 
 #include "ShapeSphere.hpp"
+#include "Vec.hpp"
+
+gphysics::ShapeSphere::ShapeSphere(float radiusP) : radius(radiusP) {
+    centerOfMass = Vec::zero;
+}

@@ -22,6 +22,7 @@ public:
 private:
     vector<Body> bodies;
     InputState inputState;
+    bool isPaused {true};
 };
 
 

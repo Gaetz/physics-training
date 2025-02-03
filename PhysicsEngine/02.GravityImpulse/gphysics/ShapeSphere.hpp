@@ -10,12 +10,11 @@
 namespace gphysics {
     class ShapeSphere : public Shape {
     public:
-        ShapeSphere(float radiusP) : radius(radiusP)
-        {
-        }
+        ShapeSphere(float radiusP);
 
         ShapeType GetType() const override { return ShapeType::SHAPE_SPHERE; }
         float radius;
+
     };
 }
 

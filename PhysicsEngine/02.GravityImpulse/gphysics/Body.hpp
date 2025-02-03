@@ -32,8 +32,16 @@ namespace gphysics {
 
         Vec position;
         Quat orientation;
+        Vec linearVelocity;
+
         Shape* shape { nullptr };
         Drawable* drawable { nullptr };
+
+        Vec GetCenterOfMassWorldSpace() const;
+        Vec GetCenterOfMassBodypace() const;
+
+        Vec WorldSpaceToBodySpace(const Vec& worldPoint);
+        Vec BodySpaceToWorldSpace(const Vec& worldPoint);
 
     };
 }

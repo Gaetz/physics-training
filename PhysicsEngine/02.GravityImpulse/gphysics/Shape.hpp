@@ -5,6 +5,10 @@
 #ifndef GPHYSICS_SHAPE_HPP
 #define GPHYSICS_SHAPE_HPP
 
+#include "Vec.hpp"
+
+using gmath::Vec;
+
 namespace gphysics {
     class Shape {
     public:
@@ -14,6 +18,10 @@ namespace gphysics {
         };
 
         [[nodiscard]] virtual ShapeType GetType() const = 0;
+        [[nodiscard]] Vec GetCenterOfMass() const { return centerOfMass; };
+
+    protected:
+        Vec centerOfMass {};
     };
 }
 
