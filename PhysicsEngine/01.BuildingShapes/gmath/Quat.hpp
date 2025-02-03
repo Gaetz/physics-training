@@ -10,6 +10,8 @@
 
 namespace gmath {
 
+    class Mat3;
+
     class Quat {
     public:
         real x;
@@ -34,14 +36,18 @@ namespace gmath {
         // and the angle is in radians
         explicit Quat(const Vec &axis, real angle);
 
+        Quat operator * ( const Quat & rhs ) const;
+        Quat & operator *= ( const float & rhs );
+        Quat & operator *= ( const Quat & rhs );
+
         // Directly Set the internal components
         void Set(real inX, real inY, real inZ, real inW);
 
         void Conjugate();
 
-        real LengthSq() const;
+        real MagnitudeSq() const;
 
-        real Length() const;
+        real Magnitude() const;
 
         void Normalize();
 
@@ -61,6 +67,22 @@ namespace gmath {
         // Concatenate
         // Rotate by q FOLLOWED BY p
         static Quat Concatenate(const Quat &q, const Quat &p);
+
+        void Invert();
+
+        Quat Inverse() const;
+
+        Vec RotatePoint(const Vec &rhs) const;
+
+        Mat3 RotateMatrix(const Mat3 &rhs) const;
+
+        bool IsValid() const;
+
+        Mat3 ToMat3() const;
+
+        Vec xyz() const { return { x, y, z }; }
+
+        Vec ToVec4() const { return {x, y, z, w}; }
 
     };
 }

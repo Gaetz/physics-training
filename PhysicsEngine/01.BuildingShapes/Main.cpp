@@ -11,6 +11,7 @@
 #include "Scene02Quad.hpp"
 #include "Scene03Cube.hpp"
 #include "Scene04Sphere.hpp"
+#include "Scene05Bodies.hpp"
 
 using namespace std;
 
