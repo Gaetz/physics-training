@@ -28,7 +28,7 @@ namespace gdraw
         mesh.SetTransform(transform);
     }
 
-    void Cube::Draw() {
+    void Cube::Draw(const Renderer& renderer) {
         Bind();
         mesh.Draw();
     }

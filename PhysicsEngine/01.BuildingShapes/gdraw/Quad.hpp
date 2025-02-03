@@ -8,19 +8,20 @@
 #include "QuadMaterial.hpp"
 #include "QuadMesh.hpp"
 #include "Mat4.hpp"
+#include "Drawable.hpp"
 
 using gmath::Mat4;
 
 namespace gdraw
 {
-    class Quad
+    class Quad : public Drawable
     {
     public:
         explicit Quad(Renderer& renderer_) : material(&renderer_), mesh(&renderer_) {}
 
         void Load();
         void Update(f32 dt);
-        void Draw();
+        void Draw(const Renderer& renderer) override;
         void Unload();
 
     private:

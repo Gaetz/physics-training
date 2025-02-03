@@ -14,7 +14,7 @@ bool Scene02Quad::Update(float dt) {
 void Scene02Quad::Draw(Renderer& renderer) {
     renderer.Begin();
 
-    quad->Draw();
+    quad->Draw(renderer);
 
     renderer.End();
 }

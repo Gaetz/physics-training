@@ -20,7 +20,6 @@ public:
     void Unload(Renderer& renderer) override;
 
 private:
-    uptr<SphereCube> sphere;
     vector<Body> bodies;
     InputState inputState;
 };

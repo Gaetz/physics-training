@@ -8,19 +8,20 @@
 #include "CubeMaterial.hpp"
 #include "CubeMesh.hpp"
 #include "Mat4.hpp"
+#include "Drawable.hpp"
 
 using gmath::Mat4;
 
 namespace gdraw
 {
-    class Cube
+    class Cube : public Drawable
     {
     public:
         explicit Cube(Renderer& renderer_) : material(&renderer_), mesh(&renderer_) {}
 
         void Load();
         void Update(f32 dt);
-        void Draw();
+        void Draw(const Renderer& renderer);
         void Unload();
 
     private:

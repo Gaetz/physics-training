@@ -8,12 +8,13 @@
 #include "SphereCubeMaterial.hpp"
 #include "SphereCubeMesh.hpp"
 #include "Mat4.hpp"
+#include "Drawable.hpp"
 
 using gmath::Mat4;
 
 namespace gdraw
 {
-    class SphereCube
+    class SphereCube : public Drawable
     {
     public:
         explicit SphereCube(Renderer& renderer_) : material(&renderer_), mesh(&renderer_) {}

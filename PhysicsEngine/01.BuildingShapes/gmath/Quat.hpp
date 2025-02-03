@@ -17,10 +17,10 @@ namespace gmath {
         real z;
         real w;
 
-        static const Quat Identity;
+        static const Quat identity;
 
         Quat() {
-            *this = Quat::Identity;
+            *this = Quat::identity;
         }
 
         // This directly Sets the quaternion components --

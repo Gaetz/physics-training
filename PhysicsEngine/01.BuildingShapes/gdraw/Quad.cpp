@@ -28,7 +28,7 @@ namespace gdraw
         mesh.SetTransform(transform);
     }
 
-    void Quad::Draw() {
+    void Quad::Draw(const Renderer& renderer) {
         Bind();
         mesh.Draw();
     }

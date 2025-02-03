@@ -14,7 +14,7 @@ bool Scene03Cube::Update(float dt) {
 void Scene03Cube::Draw(Renderer& renderer) {
     renderer.Begin();
 
-    cube->Draw();
+    cube->Draw(renderer);
 
     renderer.End();
 }

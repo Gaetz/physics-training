@@ -5,7 +5,7 @@
 #include "Quat.hpp"
 
 namespace gmath {
-    const Quat Quat::Identity(0.0f, 0.0f, 0.0f, 1.0f);
+    const Quat Quat::identity(0.0f, 0.0f, 0.0f, 1.0f);
 
     Quat Quat::Slerp(const Quat &a, const Quat &b, real f) {
         real rawCosm = Quat::Dot(a, b);
