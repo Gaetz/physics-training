@@ -8,10 +8,10 @@
 #include <SDL3/SDL_gpu.h>
 #include <Defines.hpp>
 #include <Mat4.hpp>
-#include <Vec3.hpp>
+#include <Vec.hpp>
 
 using gmath::Mat4;
-using gmath::Vec3;
+using gmath::Vec;
 
 namespace gdraw {
 
@@ -107,7 +107,7 @@ namespace gdraw {
 
     private:
         Mat4 projection { Mat4::identity };
-        Mat4 view { Mat4::CreateLookAt(Vec3 {0, 0, 10.0f}, Vec3::zero, Vec3::up) };
+        Mat4 view { Mat4::CreateLookAt(Vec {0, 0, 10.0f}, Vec::zero, Vec::up) };
     };
 }
 

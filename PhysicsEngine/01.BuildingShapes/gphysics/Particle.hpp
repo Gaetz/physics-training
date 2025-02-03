@@ -5,19 +5,19 @@
 #ifndef GPHYSICS_PARTICLE_HPP
 #define GPHYSICS_PARTICLE_HPP
 
-#include "Vec3.hpp"
+#include "Vec.hpp"
 #include "Precision.hpp"
 
-using gmath::Vec3;
+using gmath::Vec;
 
 namespace gphysics
 {
     class Particle
     {
     protected:
-        Vec3 position{0, 0, 0};
-        Vec3 velocity{0, 0, 0};
-        Vec3 acceleration{0, 0, 0};
+        Vec position{0, 0, 0};
+        Vec velocity{0, 0, 0};
+        Vec acceleration{0, 0, 0};
 
         /**
          * Holds the amount of damping applied to linear
@@ -41,7 +41,7 @@ namespace gphysics
          * simulation iteration only. This value is zeroed at each
          * integration step.
          */
-        Vec3 forceAccum{0, 0, 0};
+        Vec forceAccum{0, 0, 0};
 
         /**
          * Clears the forces applied to the particle. This will be
@@ -59,12 +59,12 @@ namespace gphysics
 
 
     public:
-        [[nodiscard]] Vec3 GetPosition() const { return position; }
-        void SetPosition(const Vec3& position_) { position = position_; }
-        [[nodiscard]] Vec3 GetVelocity() const { return velocity; }
-        void SetVelocity(const Vec3& velocity_) { velocity = velocity_; }
-        [[nodiscard]] Vec3 GetAcceleration() const { return acceleration; }
-        void SetAcceleration(const Vec3& acceleration_) { acceleration = acceleration_; }
+        [[nodiscard]] Vec GetPosition() const { return position; }
+        void SetPosition(const Vec& position_) { position = position_; }
+        [[nodiscard]] Vec GetVelocity() const { return velocity; }
+        void SetVelocity(const Vec& velocity_) { velocity = velocity_; }
+        [[nodiscard]] Vec GetAcceleration() const { return acceleration; }
+        void SetAcceleration(const Vec& acceleration_) { acceleration = acceleration_; }
         [[nodiscard]] real GetDamping() const { return damping; }
         void SetDamping(real damping_) { damping = damping_; }
         [[nodiscard]] real GetInverseMass() const { return inverseMass; }

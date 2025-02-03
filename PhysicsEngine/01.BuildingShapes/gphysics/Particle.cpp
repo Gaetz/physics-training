@@ -17,7 +17,7 @@ namespace gphysics
         // Update linear position
         position.AddScaledVector(velocity, duration);
         // Update linear velocity
-        Vec3 resultingAcceleration = acceleration;
+        Vec resultingAcceleration = acceleration;
         velocity.AddScaledVector(resultingAcceleration, inverseMass);
         velocity *= RealPow(damping, duration); // Damping for numerical stability
 

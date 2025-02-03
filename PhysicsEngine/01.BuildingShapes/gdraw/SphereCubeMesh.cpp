@@ -8,7 +8,7 @@
 #include <Renderer.hpp>
 #include <VertexTypes.hpp>
 #include <Mat4.hpp>
-#include <Vec3.hpp>
+#include <Vec.hpp>
 
 namespace gdraw
 {
@@ -175,7 +175,7 @@ namespace gdraw
     }
 
     void SphereCubeMesh::SetVertex(i32 i, i32 x, i32 y, i32 z) {
-        Vec3 v = Vec3 { static_cast<f32>(x), static_cast<f32>(y), static_cast<f32>(z) } * 2.0f / gridSize - Vec3::one;
+        Vec v = Vec {static_cast<f32>(x), static_cast<f32>(y), static_cast<f32>(z) } * 2.0f / gridSize - Vec::one;
         normals[i] = v.Normalize();
         vertices[i] = normals[i] * radius;
     }

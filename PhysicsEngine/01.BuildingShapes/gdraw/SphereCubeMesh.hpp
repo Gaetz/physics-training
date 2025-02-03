@@ -6,15 +6,15 @@
 #define GDRAW_SPHERECUBEMESH_HPP
 #include <SDL3/SDL_gpu.h>
 #include "Defines.hpp"
-#include <Vec3.hpp>
+#include <Vec.hpp>
 
 namespace gmath {
     class Mat4;
-    class Vec3;
+    class Vec;
 }
 
 using gmath::Mat4;
-using gmath::Vec3;
+using gmath::Vec;
 
 namespace gdraw
 {
@@ -32,8 +32,8 @@ namespace gdraw
 
     private:
         Renderer* renderer{nullptr};
-        vector<Vec3> vertices;
-        vector<Vec3> normals;
+        vector<Vec> vertices;
+        vector<Vec> normals;
         vector<i32> indices;
         u32 vertexCount;
         u32 quadCount;

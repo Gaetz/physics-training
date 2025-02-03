@@ -8,7 +8,7 @@
 #define GMATH_VEC3_HPP
 
 namespace gmath {
-    class Vec3 {
+    class Vec {
     public:
         real x { 0 };
         real y { 0 };
@@ -16,17 +16,17 @@ namespace gmath {
         real w { 1 };
 
     public:
-        Vec3() = default;
-        Vec3(real x, real y, real z) : x(x), y(y), z(z), w(1) {}
+        Vec() = default;
+        Vec(real x, real y, real z) : x(x), y(y), z(z), w(1) {}
 
-        static const Vec3 zero;
-        static const Vec3 one;
-        static const Vec3 up;
-        static const Vec3 right;
-        static const Vec3 forward;
-        static const Vec3 down;
-        static const Vec3 left;
-        static const Vec3 backward;
+        static const Vec zero;
+        static const Vec one;
+        static const Vec up;
+        static const Vec right;
+        static const Vec forward;
+        static const Vec down;
+        static const Vec left;
+        static const Vec backward;
 
         void Invert();
 
@@ -34,27 +34,27 @@ namespace gmath {
 
         [[nodiscard]] real SquareMagnitude() const;
 
-        Vec3 &Normalize();
+        Vec &Normalize();
 
         void Clear();
 
         void operator*=(real scalar);
 
-        Vec3 operator*(real scalar) const;
+        Vec operator*(real scalar) const;
 
-        void operator+=(const Vec3 &v);
+        void operator+=(const Vec &v);
 
-        Vec3 operator+(const Vec3 &v) const;
+        Vec operator+(const Vec &v) const;
 
-        void operator-=(const Vec3 &v);
+        void operator-=(const Vec &v);
 
-        Vec3 operator-(const Vec3 &v) const;
+        Vec operator-(const Vec &v) const;
 
-        Vec3 operator/(i32 scalar) const;
+        Vec operator/(i32 scalar) const;
 
-        void AddScaledVector(const Vec3 &v, real scale);
+        void AddScaledVector(const Vec &v, real scale);
 
-        friend Vec3 operator*(float scalar, const Vec3 &vec) {
+        friend Vec operator*(float scalar, const Vec &vec) {
             return {vec.x * scalar, vec.y * scalar, vec.z * scalar};
         }
 
@@ -63,36 +63,36 @@ namespace gmath {
          * All vectors will be normalized.
          * This function is working for a right-handed coordinate system.
          */
-        static void MakeOrthonormalBasis(Vec3 &a, Vec3 &b, Vec3 &c);
+        static void MakeOrthonormalBasis(Vec &a, Vec &b, Vec &c);
 
         /** Calculate and return a component-wise product of this vector with the given vector. */
-        Vec3 ComponentProduct(const Vec3 &v) const;
+        Vec ComponentProduct(const Vec &v) const;
 
         /** Perform a component-wise product with the given vector and set this vector to its result. */
-        void ComponentProductUpdate(const Vec3 &v);
+        void ComponentProductUpdate(const Vec &v);
 
         /** Calculate and return the scalar product of this vector with the given vector. */
-        real ScalarProduct(const Vec3 &v) const { return x * v.x + y * v.y + z * v.z; }
+        real ScalarProduct(const Vec &v) const { return x * v.x + y * v.y + z * v.z; }
 
         /** Calculate and return the scalar product of this vector with the given vector. */
-        real Dot(const Vec3 &v) { return x * v.x + y * v.y + z * v.z; }
+        real Dot(const Vec &v) { return x * v.x + y * v.y + z * v.z; }
 
         /** Calculate and return the scalar product of this vector with the given vector. */
-        real operator*(const Vec3 &v) const { return x * v.x + y * v.y + z * v.z; }
+        real operator*(const Vec &v) const { return x * v.x + y * v.y + z * v.z; }
 
         /** Calculate and return the vector product of this vector with the given vector. */
-        Vec3 VectorProduct(const Vec3 &v) const {
-            return Vec3(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x);
+        Vec VectorProduct(const Vec &v) const {
+            return Vec(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x);
         }
 
         /** Calculate and return the vector product of this vector with the given vector. */
-        Vec3 Cross(const Vec3 &v) const { return Vec3(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x); }
+        Vec Cross(const Vec &v) const { return Vec(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x); }
 
         /** Calculate and return the vector product of this vector with the given vector. */
-        Vec3 operator%(const Vec3 &v) const { return Vec3(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x); }
+        Vec operator%(const Vec &v) const { return Vec(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x); }
 
         /** Updates this vector to be the vector product of its current value and the given vector. */
-        void operator%=(const Vec3 &v);
+        void operator%=(const Vec &v);
     };
 }
 

@@ -5,7 +5,7 @@
 #ifndef GMATH_QUATERNION_HPP
 #define GMATH_QUATERNION_HPP
 
-#include "Vec3.hpp"
+#include "Vec.hpp"
 #include "Core.hpp"
 
 namespace gmath {
@@ -32,7 +32,7 @@ namespace gmath {
         // Construct the quaternion from an axis and angle
         // It is assumed that axis is already Normalized,
         // and the angle is in radians
-        explicit Quat(const Vec3 &axis, real angle);
+        explicit Quat(const Vec &axis, real angle);
 
         // Directly Set the internal components
         void Set(real inX, real inY, real inZ, real inW);

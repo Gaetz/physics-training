@@ -10,7 +10,7 @@
 namespace gmath {
 
     class Mat2;
-    class Vec3;
+    class Vec;
 
     class Mat3 {
     public:
@@ -21,7 +21,7 @@ namespace gmath {
 
         Mat3(const Mat3 &rhs);
 
-        Mat3(const Vec3& row0_, const Vec3& row1_, const Vec3& row2_);
+        Mat3(const Vec& row0_, const Vec& row1_, const Vec& row2_);
 
         Mat3(f32 m0_, f32 m3_, f32 m6_,
              f32 m1_, f32 m4_, f32 m7_,
@@ -49,7 +49,7 @@ namespace gmath {
 
         float Cofactor(const int i, const int j) const;
 
-        Vec3 operator*(const Vec3 &rhs) const;
+        Vec operator*(const Vec &rhs) const;
 
         Mat3 operator*(const float rhs) const;
 

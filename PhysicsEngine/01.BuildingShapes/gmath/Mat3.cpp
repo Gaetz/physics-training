@@ -4,7 +4,7 @@
 
 #include "Mat3.hpp"
 #include <Mat2.hpp>
-#include <Vec3.hpp>
+#include <Vec.hpp>
 
 namespace gmath {
     Mat3 Mat3::zero{0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -22,7 +22,7 @@ namespace gmath {
         m8 = rhs.m8;
     }
 
-    Mat3::Mat3(const Vec3 &row0_, const Vec3 &row1_, const Vec3 &row2_) {
+    Mat3::Mat3(const Vec &row0_, const Vec &row1_, const Vec &row2_) {
         m0 = row0_.x;
         m3 = row0_.y;
         m6 = row0_.z;
@@ -168,11 +168,11 @@ namespace gmath {
         return C;
     }
 
-    Vec3 Mat3::operator*(const Vec3 &rhs) const {
-        Vec3 tmp{};
-        Vec3 row0{m0, m3, m6};
-        Vec3 row1{m1, m4, m7};
-        Vec3 row2{m2, m5, m8};
+    Vec Mat3::operator*(const Vec &rhs) const {
+        Vec tmp{};
+        Vec row0{m0, m3, m6};
+        Vec row1{m1, m4, m7};
+        Vec row2{m2, m5, m8};
         tmp.x = row0.Dot(rhs);
         tmp.y = row1.Dot(rhs);
         tmp.z = row2.Dot(rhs);
@@ -181,9 +181,9 @@ namespace gmath {
 
     Mat3 Mat3::operator*(const f32 rhs) const {
         Mat3 tmp{
-        Vec3{m0, m3, m6} * rhs,
-        Vec3{m1, m4, m7} * rhs,
-        Vec3{m2, m5, m8} * rhs
+                Vec{m0, m3, m6} * rhs,
+                Vec{m1, m4, m7} * rhs,
+                Vec{m2, m5, m8} * rhs
         };
         return tmp;
     }

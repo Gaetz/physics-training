@@ -2,7 +2,7 @@
 #include "Mat3.hpp"
 #include <cstdlib>
 
-#include <Vec3.hpp>
+#include <Vec.hpp>
 #include <Quat.hpp>
 
 namespace gmath {
@@ -63,11 +63,11 @@ namespace gmath {
     }
 
     // Extract the scale component from the matrix
-    Vec3 Mat4::GetScale() const {
-        Vec3 retVal;
-        retVal.x = Vec3(m0, m1, m2).Magnitude();
-        retVal.y = Vec3(m4, m5, m3).Magnitude();
-        retVal.z = Vec3(m8, m9, m10).Magnitude();
+    Vec Mat4::GetScale() const {
+        Vec retVal;
+        retVal.x = Vec(m0, m1, m2).Magnitude();
+        retVal.y = Vec(m4, m5, m3).Magnitude();
+        retVal.z = Vec(m8, m9, m10).Magnitude();
         return retVal;
     }
 
@@ -82,7 +82,7 @@ namespace gmath {
                 };
     }
 
-    Mat4 Mat4::CreateScale(const Vec3 &scaleVector) {
+    Mat4 Mat4::CreateScale(const Vec &scaleVector) {
         return CreateScale(scaleVector.x, scaleVector.y, scaleVector.z);
     }
 
@@ -242,10 +242,10 @@ namespace gmath {
         return reinterpret_cast<f32 *>(this);
     }
 
-    Mat4 Mat4::CreateLookAt(const Vec3 &eye, const Vec3 &target, const Vec3 &up) {
-        Vec3 zAxis = (eye - target).Normalize();
-        Vec3 xAxis = up.Cross(zAxis).Normalize();
-        Vec3 yAxis = zAxis.Cross(xAxis);
+    Mat4 Mat4::CreateLookAt(const Vec &eye, const Vec &target, const Vec &up) {
+        Vec zAxis = (eye - target).Normalize();
+        Vec xAxis = up.Cross(zAxis).Normalize();
+        Vec yAxis = zAxis.Cross(xAxis);
 
         return Mat4{
                 xAxis.x, yAxis.x, zAxis.x, 0,
@@ -355,10 +355,10 @@ namespace gmath {
         return C;
     }
 
-    inline void Mat4::Orient(Vec3 pos, Vec3 fwd, Vec3 up) {
-        Vec3 zAxis = fwd.Normalize();
-        Vec3 xAxis = up.Cross(zAxis).Normalize();
-        Vec3 yAxis = zAxis.Cross(xAxis);
+    inline void Mat4::Orient(Vec pos, Vec fwd, Vec up) {
+        Vec zAxis = fwd.Normalize();
+        Vec xAxis = up.Cross(zAxis).Normalize();
+        Vec yAxis = zAxis.Cross(xAxis);
 
         m0 = xAxis.x;
         m1 = xAxis.y;

@@ -7,7 +7,7 @@
 
 
 namespace gmath {
-    class Vec3;
+    class Vec;
     class Mat3;
     class Quat;
 
@@ -49,19 +49,19 @@ namespace gmath {
 
         static Mat4 CreateScale(float xScale, float yScale, float zScale);
 
-        static Mat4 CreateScale(const Vec3 &scaleVector);
+        static Mat4 CreateScale(const Vec &scaleVector);
 
         static Mat4 CreateScale(float scale);
 
         static Mat4 CreateFromQuaternion(const class Quat &q);
 
 
-        [[nodiscard]] Vec3 GetScale() const;
+        [[nodiscard]] Vec GetScale() const;
 
         [[nodiscard]] const f32 *ToArrayConst() const;
         [[nodiscard]] f32 *ToArray();
 
-        static Mat4 CreateLookAt(const Vec3 &eye, const Vec3 &target, const Vec3 &up);
+        static Mat4 CreateLookAt(const Vec &eye, const Vec &target, const Vec &up);
 
         static Mat4
         CreateOrthographicOffCenter(f32 left, f32 right, f32 bottom, f32 top, f32 zNearPlane, f32 zFarPlane);
@@ -75,7 +75,7 @@ namespace gmath {
         Mat4 Inverse() const;
         Mat3 Minor( i32 i, i32 j ) const;
         f32 Cofactor( i32 i, i32 j ) const;
-        void Orient( Vec3 pos, Vec3 fwd, Vec3 up );
+        void Orient(Vec pos, Vec fwd, Vec up );
     };
 }
 

@@ -42,7 +42,7 @@ namespace gmath {
         return retVal;
     }
 
-    Quat::Quat(const Vec3 &axis, real angle) {
+    Quat::Quat(const Vec &axis, real angle) {
         real scalar = RealSin(angle / 2.0f);
         x = axis.x * scalar;
         y = axis.y * scalar;
@@ -100,9 +100,9 @@ namespace gmath {
 
         // Vector component is:
         // ps * qv + qs * pv + pv x qv
-        Vec3 qv(q.x, q.y, q.z);
-        Vec3 pv(p.x, p.y, p.z);
-        Vec3 newVec = p.w * qv + q.w * pv + pv.Cross(qv);
+        Vec qv(q.x, q.y, q.z);
+        Vec pv(p.x, p.y, p.z);
+        Vec newVec = p.w * qv + q.w * pv + pv.Cross(qv);
         retVal.x = newVec.x;
         retVal.y = newVec.y;
         retVal.z = newVec.z;
