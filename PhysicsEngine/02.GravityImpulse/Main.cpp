@@ -4,9 +4,11 @@
 
 #include <iostream>
 #include "SDL3/SDL_main.h"
+#include "SDL3/SDL_filesystem.h"
 #include "Time.hpp"
 #include "Window.hpp"
 #include "Renderer.hpp"
+#include "File.hpp"
 #include "Scene01Clear.hpp"
 #include "Scene02Quad.hpp"
 #include "Scene03Cube.hpp"
@@ -19,6 +21,7 @@ using gdraw::Window;
 using gdraw::Renderer;
 
 int main(int argc, char **argv) {
+    gfile::File::SetGameAssetsPath(SDL_GetBasePath());
     Window window {};
     Renderer renderer {};
     Time time {};
