@@ -10,7 +10,9 @@
 #include "Mat4.hpp"
 #include "Drawable.hpp"
 
+using gmath::Vec;
 using gmath::Mat4;
+using gmath::Quat;
 
 namespace gdraw
 {
@@ -23,6 +25,9 @@ namespace gdraw
         void Update(f32 dt);
         void Draw(const Renderer& renderer);
         void Unload();
+
+        void SetTransform(const Mat4& transform_) override;
+        void SetTransform(const Vec& position, const Quat& rotation, const Vec& scale = Vec(1, 1, 1)) override;
 
     private:
         SphereCubeMaterial material;

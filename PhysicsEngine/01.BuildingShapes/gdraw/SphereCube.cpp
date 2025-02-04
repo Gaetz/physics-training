@@ -37,4 +37,12 @@ namespace gdraw
         mesh.Unload();
         material.Unload();
     }
+
+    void SphereCube::SetTransform(const Vec &position, const Quat &rotation, const Vec &scale) {
+        transform = Mat4::CreateTranslation(position) * Mat4::CreateFromQuaternion(rotation) * Mat4::CreateScale(scale);
+    }
+
+    void SphereCube::SetTransform(const Mat4 &transform_) {
+        transform = transform_;
+    }
 }

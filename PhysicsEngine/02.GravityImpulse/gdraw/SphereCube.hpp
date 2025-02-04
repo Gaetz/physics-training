@@ -19,7 +19,7 @@ namespace gdraw
     class SphereCube : public Drawable
     {
     public:
-        explicit SphereCube(Renderer& renderer_) : material(&renderer_), mesh(&renderer_) {}
+        explicit SphereCube(Renderer& renderer_, f32 size) : material(&renderer_), mesh(&renderer_, size) {}
 
         void Load();
         void Update(f32 dt);

@@ -7,10 +7,14 @@ using gphysics::ShapeSphere;
 
 void Scene05Bodies::Load(Renderer& renderer) {
     auto shape = new ShapeSphere(1.0f);
-    auto sphere = new SphereCube(renderer);
+    auto sphere = new SphereCube(renderer, 1.0f);
     sphere->Load();
-
     bodies.emplace_back(Vec::zero, Quat::identity, shape, sphere);
+
+    auto shapeEarth = new ShapeSphere(1.0f);
+    auto sphereEarth = new SphereCube(renderer, 1.0f);
+    sphere->Load();
+    bodies.emplace_back(Vec {0, -2, 0}, Quat::identity, shapeEarth, sphereEarth);
 }
 
 bool Scene05Bodies::Update(float dt) {
@@ -21,7 +25,9 @@ bool Scene05Bodies::Update(float dt) {
 
     if (!isPaused) {
         for (auto &body: bodies) {
-            body.linearVelocity += Vec{0.0f, -10.0f, 0.0f} * dt;
+            real mass = 1.0f / body.inverseMass;
+            Vec impulseGravity = Vec(0, -10.0f, 0) * mass * dt;
+            body.ApplyImpulseLinear(impulseGravity);
         }
 
         for (auto &body: bodies) {

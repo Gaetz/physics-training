@@ -33,6 +33,7 @@ namespace gphysics {
         Vec position;
         Quat orientation;
         Vec linearVelocity;
+        real inverseMass;
 
         Shape* shape { nullptr };
         Drawable* drawable { nullptr };
@@ -42,6 +43,8 @@ namespace gphysics {
 
         Vec WorldSpaceToBodySpace(const Vec& worldPoint);
         Vec BodySpaceToWorldSpace(const Vec& worldPoint);
+
+        void ApplyImpulseLinear(const Vec& impulse);
 
     };
 }

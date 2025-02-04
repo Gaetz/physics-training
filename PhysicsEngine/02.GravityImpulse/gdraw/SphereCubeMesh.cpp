@@ -12,7 +12,7 @@
 
 namespace gdraw
 {
-    SphereCubeMesh::SphereCubeMesh(Renderer* renderer_) : renderer{renderer_} {
+    SphereCubeMesh::SphereCubeMesh(Renderer* renderer_, f32 size) : renderer{renderer_}, radius{size} {
         Build();
         // Create the vertex buffer
         SDL_GPUBufferCreateInfo vertexBufferCreateInfo =

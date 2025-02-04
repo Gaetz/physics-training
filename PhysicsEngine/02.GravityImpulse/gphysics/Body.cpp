@@ -42,4 +42,12 @@ namespace gphysics {
         return GetCenterOfMassWorldSpace() + orientation.RotatePoint(worldPoint);
     }
 
+    void Body::ApplyImpulseLinear(const Vec &impulse) {
+        if (inverseMass == 0) {
+            return;
+        }
+
+        linearVelocity += impulse * inverseMass;
+    }
+
 }

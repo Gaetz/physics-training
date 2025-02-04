@@ -24,6 +24,9 @@ namespace gdraw
         void Draw(const Renderer& renderer);
         void Unload();
 
+        void SetTransform(const Mat4& transform_) override;
+        void SetTransform(const Vec& position, const Quat& rotation, const Vec& scale) override;
+
     private:
         CubeMaterial material;
         CubeMesh mesh;
