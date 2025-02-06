@@ -5,9 +5,11 @@
 #include "QuadMesh.hpp"
 
 #include <GpuUploader.hpp>
-#include <Renderer.hpp>
+#include <RendererSdl.hpp>
 #include <VertexTypes.hpp>
 #include <Mat4.hpp>
+
+using gassets::GPUUploader;
 
 namespace gdraw
 {

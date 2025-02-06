@@ -6,7 +6,9 @@
 #include <SDL3/SDL.h>
 #include "GpuUploader.hpp"
 #include "VertexTypes.hpp"
-#include "Renderer.hpp"
+#include <RendererSdl.hpp>
+
+using gassets::GPUUploader;
 
 namespace gdraw {
     Material::Material(Renderer* renderer_) : renderer { renderer_ } { }
@@ -114,7 +116,7 @@ namespace gdraw {
 
         // Upload to GPU
         GPUUploader uploader { renderer->device };
-        uploader.PrepareTextureData<PositionTextureVertex>(surface);
+        uploader.PrepareTextureData(surface);
         uploader.Begin();
         SDL_GPUTextureTransferInfo textureBufferLocation {
                 .transfer_buffer = uploader.GetTransferBuffer(),

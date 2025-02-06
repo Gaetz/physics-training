@@ -9,19 +9,19 @@ namespace gfile {
     str FileTypePath(FileType fileType) {
         switch (fileType) {
             case FileType::Data: {
-                return gfile::File::GetGameAssetsPath() + "/data/";
+                return gfile::File::GetGameAssetsPath() + "/Data/";
             }
             case FileType::System: {
-                return gfile::File::GetGameAssetsPath() + "/system/";
+                return gfile::File::GetGameAssetsPath() + "/System/";
             }
             case FileType::Texture: {
-                return gfile::File::GetGameAssetsPath() + "/textures/";
+                return gfile::File::GetGameAssetsPath() + "/Images/";
             }
             case FileType::Shader: {
-                return gfile::File::GetGameAssetsPath() + "/shaders/";
+                return gfile::File::GetGameAssetsPath() + "/Shaders/";
             }
             case FileType::Model: {
-                return gfile::File::GetGameAssetsPath() + "/models/";
+                return gfile::File::GetGameAssetsPath() + "/Models/";
             }
             default: {
                 return "";

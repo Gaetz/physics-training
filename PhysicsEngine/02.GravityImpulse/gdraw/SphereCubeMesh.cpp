@@ -5,10 +5,11 @@
 #include "SphereCubeMesh.hpp"
 
 #include <GpuUploader.hpp>
-#include <Renderer.hpp>
+#include <RendererSdl.hpp>
 #include <VertexTypes.hpp>
 #include <Mat4.hpp>
-#include <Vec.hpp>
+
+using gassets::GPUUploader;
 
 namespace gdraw
 {

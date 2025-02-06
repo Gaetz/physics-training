@@ -79,6 +79,7 @@ add_subdirectory(gplatform)
 add_subdirectory(glog)
 add_subdirectory(gfile)
 add_subdirectory(gmath)
+add_subdirectory(gassets)
 add_subdirectory(gphysics)
 add_subdirectory(gdraw)
 

@@ -7,7 +7,7 @@
 
 #include <SDL3/SDL_events.h>
 #include "InputState.hpp"
-#include "Renderer.hpp"
+#include <RendererSdl.hpp>
 
 using gdraw::Renderer;
 

@@ -4,7 +4,7 @@
 
 #include "CubeMaterial.hpp"
 #include <SDL3/SDL.h>
-#include "Renderer.hpp"
+#include <RendererSdl.hpp>
 
 namespace gdraw {
 

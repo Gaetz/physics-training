@@ -51,7 +51,6 @@ namespace gdraw {
         SDL_GPUShader* vertexShader { nullptr };
         SDL_GPUShader* fragmentShader { nullptr };
         SDL_GPUTexture* texture { nullptr };
-        SDL_GPUTexture* depthTexture { nullptr };
         SDL_GPUSampler* sampler { nullptr };
         SDL_GPUGraphicsPipeline* pipeline { nullptr };
         FragMultiplyUniform colorMultiply { 1, 1, 1, 1 };

@@ -2,8 +2,8 @@
 // Created by Gaëtan Blaise-Cazalet on 19/11/2024.
 //
 
-#ifndef RENDERER_HPP
-#define RENDERER_HPP
+#ifndef GDRAW_RENDERERSDL_HPP
+#define GDRAW_RENDERERSDL_HPP
 
 #include <SDL3/SDL_gpu.h>
 #include <Defines.hpp>
@@ -112,4 +112,4 @@ namespace gdraw {
 }
 
 
-#endif //RENDERER_HPP
+#endif //GDRAW_RENDERERSDL_HPP

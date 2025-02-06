@@ -5,7 +5,7 @@
 #include "SphereCube.hpp"
 
 #include <VertexTypes.hpp>
-#include <Renderer.hpp>
+#include <RendererSdl.hpp>
 
 namespace gdraw
 {

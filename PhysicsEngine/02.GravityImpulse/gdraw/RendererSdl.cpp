@@ -2,7 +2,7 @@
 // Created by Gaëtan Blaise-Cazalet on 19/11/2024.
 //
 
-#include "Renderer.hpp"
+#include "RendererSdl.hpp"
 
 #include <SDL3/SDL_assert.h>
 

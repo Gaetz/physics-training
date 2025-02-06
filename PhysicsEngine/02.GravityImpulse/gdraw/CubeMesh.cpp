@@ -4,10 +4,12 @@
 
 #include "CubeMesh.hpp"
 
-#include <GpuUploader.hpp>
-#include <Renderer.hpp>
-#include <VertexTypes.hpp>
 #include <Mat4.hpp>
+#include <RendererSdl.hpp>
+#include <VertexTypes.hpp>
+#include <GpuUploader.hpp>
+
+using gassets::GPUUploader;
 
 namespace gdraw
 {
