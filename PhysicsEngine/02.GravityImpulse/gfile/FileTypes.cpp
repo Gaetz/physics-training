@@ -18,7 +18,7 @@ namespace gfile {
                 return gfile::File::GetGameAssetsPath() + "/Images/";
             }
             case FileType::Shader: {
-                return gfile::File::GetGameAssetsPath() + "/Shaders/";
+                return gfile::File::GetGameAssetsPath() + "/Shaders/Compiled/";
             }
             case FileType::Model: {
                 return gfile::File::GetGameAssetsPath() + "/Models/";

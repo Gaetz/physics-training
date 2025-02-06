@@ -27,7 +27,7 @@ namespace gassets {
         MirroredRepeat
     };
 
-    struct TextureSampler
+    struct Texture
     {
         SDL_GPUTexture* texture;
         SDL_GPUSampler* sampler;
@@ -38,13 +38,24 @@ namespace gassets {
         void Initialize(const str& gameAssetsPath, SDL_GPUDevice* device_);
 
         void LoadTexture(const str& name, const str& filename, TextureFilter filter, TextureWrap wrap);
-        TextureSampler& GetTexture(const str& name);
+        Texture& GetTexture(const str& name);
         void UnloadTextures();
 
+        void LoadVertexShader(const str& vertexShaderFilename, u32 samplerCount, u32 uniformBufferCount,
+                      u32 storageBufferCount, u32 storageTextureCount);
+        void LoadFragmentShader(const str& fragmentShaderFilename, u32 samplerCount, u32 uniformBufferCount,
+                                u32 storageBufferCount, u32 storageTextureCount);
+
     private:
-        unordered_map<str, TextureSampler> textures;
+        unordered_map<str, Texture> textures;
+        unordered_map<str, SDL_GPUShader*> vertexShaders;
+        unordered_map<str, SDL_GPUShader*> fragmentShaders;
 
         SDL_GPUDevice* device {nullptr};
+
+        SDL_GPUShader* LoadShader(const str& shaderFilename, u32 samplerCount, u32 uniformBufferCount,
+                          u32 storageBufferCount,
+                          u32 storageTextureCount) const;
     };
 
 }

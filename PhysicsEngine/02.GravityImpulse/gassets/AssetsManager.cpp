@@ -116,10 +116,10 @@ namespace gassets
         }
         SDL_GPUSampler* sampler = SDL_CreateGPUSampler(device, &createInfo);
 
-        textures.emplace(name, TextureSampler{texture, sampler});
+        textures.emplace(name, Texture{texture, sampler});
     }
 
-    TextureSampler& AssetsManager::GetTexture(const str& name) {
+    Texture& AssetsManager::GetTexture(const str& name) {
         if (!textures.contains(name))
         {
             LOG(LogLevel::Warning) << "Texture [" << name <<
@@ -127,5 +127,106 @@ namespace gassets
             return textures.at(DEFAULT_TEXTURE_ID);
         }
         return textures.at(name);
+    }
+
+    void AssetsManager::UnloadTextures() {
+        for (auto& texture : textures)
+        {
+            SDL_ReleaseGPUTexture(device, texture.second.texture);
+            SDL_ReleaseGPUSampler(device, texture.second.sampler);
+        }
+    }
+
+    void AssetsManager::LoadVertexShader(const str& vertexShaderFilename, u32 samplerCount, u32 uniformBufferCount,
+                                         u32 storageBufferCount, u32 storageTextureCount) {
+        if (vertexShaders.contains(vertexShaderFilename))
+        {
+            LOG(LogLevel::Warning) << "Vertex shader [" << vertexShaderFilename << "] already loaded.";
+            return;
+        }
+        SDL_GPUShader* shader = LoadShader(vertexShaderFilename, samplerCount, uniformBufferCount,
+                                           storageBufferCount,
+                                           storageTextureCount);
+        vertexShaders.emplace(vertexShaderFilename, shader);
+    }
+
+    void AssetsManager::LoadFragmentShader(const str& fragmentShaderFilename, u32 samplerCount, u32 uniformBufferCount,
+                                           u32 storageBufferCount, u32 storageTextureCount) {
+        if (vertexShaders.contains(fragmentShaderFilename))
+        {
+            LOG(LogLevel::Warning) << "Fragment shader [" << fragmentShaderFilename << "] already loaded.";
+            return;
+        }
+        SDL_GPUShader* shader = LoadShader(fragmentShaderFilename, samplerCount, uniformBufferCount,
+                                           storageBufferCount,
+                                           storageTextureCount);
+        fragmentShaders.emplace(fragmentShaderFilename, shader);
+    }
+
+    SDL_GPUShader* AssetsManager::LoadShader(const str& shaderFilename, u32 samplerCount, u32 uniformBufferCount,
+                                             u32 storageBufferCount, u32 storageTextureCount) const {
+        // Auto-detect the shader stage from the file name for convenience
+        SDL_GPUShaderStage stage{SDL_GPU_SHADERSTAGE_VERTEX};
+        if (SDL_strstr(shaderFilename.c_str(), ".vert")) { stage = SDL_GPU_SHADERSTAGE_VERTEX; } else if (
+            SDL_strstr(shaderFilename.c_str(), ".frag")) { stage = SDL_GPU_SHADERSTAGE_FRAGMENT; } else
+        {
+            LOG(LogLevel::Warning) << "Shader [" << shaderFilename << "]: Invalid shader stage!";
+        }
+
+        char fullPath[256];
+        SDL_GPUShaderFormat backendFormats = SDL_GetGPUShaderFormats(device);
+        SDL_GPUShaderFormat format = SDL_GPU_SHADERFORMAT_INVALID;
+        const char* entrypoint{"main"};
+
+        if (backendFormats & SDL_GPU_SHADERFORMAT_SPIRV)
+        {
+            SDL_snprintf(fullPath, sizeof(fullPath), "%s/%s.spv",
+                         gfile::FileTypePath(gfile::FileType::Shader).c_str(),
+                         shaderFilename.c_str());
+            format = SDL_GPU_SHADERFORMAT_SPIRV;
+            entrypoint = "main";
+        } else if (backendFormats & SDL_GPU_SHADERFORMAT_MSL)
+        {
+            SDL_snprintf(fullPath, sizeof(fullPath), "%s/%s.msl",
+                         gfile::FileTypePath(gfile::FileType::Shader).c_str(),
+                         shaderFilename.c_str());
+            format = SDL_GPU_SHADERFORMAT_MSL;
+            entrypoint = "main0";
+        } else if (backendFormats & SDL_GPU_SHADERFORMAT_DXIL)
+        {
+            SDL_snprintf(fullPath, sizeof(fullPath), "%s/%s.dxil",
+                         gfile::FileTypePath(gfile::FileType::Shader).c_str(),
+                         shaderFilename.c_str());
+            format = SDL_GPU_SHADERFORMAT_DXIL;
+            entrypoint = "main";
+        } else { LOG(LogLevel::Warning) << "Unrecognized backend shader format!"; }
+
+        size_t codeSize;
+        void* code = SDL_LoadFile(fullPath, &codeSize);
+        if (code == nullptr)
+        {
+            LOG(LogLevel::Error) << "Failed to load shader from disk!" << fullPath;
+        }
+
+        SDL_GPUShaderCreateInfo shaderInfo = {
+            .code_size = codeSize,
+            .code = static_cast<Uint8*>(code),
+            .entrypoint = entrypoint,
+            .format = format,
+            .stage = stage,
+            .num_samplers = samplerCount,
+            .num_storage_textures = storageTextureCount,
+            .num_storage_buffers = storageBufferCount,
+            .num_uniform_buffers = uniformBufferCount
+        };
+        SDL_GPUShader* loadedShader = SDL_CreateGPUShader(device, &shaderInfo);
+        if (loadedShader == nullptr)
+        {
+            LOG(LogLevel::Error) << "Failed to create shader [" << fullPath << "]!" << fullPath;
+            SDL_free(code);
+        }
+
+        SDL_free(code);
+        return loadedShader;
     }
 }
