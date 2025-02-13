@@ -1,9 +1,10 @@
 //
-// Created by Admin on 06/02/2025.
+// Created by gaetz on 06/10/2021.
 //
 
-#ifndef LOCATOR_HPP
-#define LOCATOR_HPP
+#ifndef LOCATOR_H
+#define LOCATOR_H
+
 
 // using engine::Renderer;
 // using engine::NullRenderer;
